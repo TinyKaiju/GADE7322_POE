@@ -22,6 +22,10 @@ using namespace std;
 // Link Shader File
 #include "Shader.h"
 
+//Link Camera File
+#include "Camera.h"  //camera 
+
+
 const GLint WIDTH = 1920, HEIGHT = 1080;
 int SCREEN_WIDTH, SCREEN_HEIGHT; // Replace all screenW & screenH with these
 
