@@ -379,14 +379,14 @@ int main()
 					// Activate White texture
 					glActiveTexture(GL_TEXTURE0);
 					glBindTexture(GL_TEXTURE_2D, textureWhite);
-					glUniform1i(glGetUniformLocation(chessboardShader.Program, "ourTexture1"), 0);
+					glUniform1i(glGetUniformLocation(chessboardShader.Program, "faceTexture"), 0);
 				}
 				else
 				{
 					// Activate Black texture
 					glActiveTexture(GL_TEXTURE0);
 					glBindTexture(GL_TEXTURE_2D, textureBlack);
-					glUniform1i(glGetUniformLocation(chessboardShader.Program, "ourTexture1"), 0);
+					glUniform1i(glGetUniformLocation(chessboardShader.Program, "faceTexture"), 0);
 				}
 
 				// Calculate the model matrix for each object and pass it to the shader before drawing
