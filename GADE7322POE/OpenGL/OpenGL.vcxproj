@@ -134,9 +134,14 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="core.frag" />
+    <None Include="core.vs" />
+    <None Include="CoreCB.frag" />
+    <None Include="CoreCB.vs" />
     <None Include="CoreHM.frag" />
     <None Include="CoreHM.vs" />
   </ItemGroup>
