@@ -216,7 +216,65 @@ int main()
 		glClearColor(0.4f, 0.6f, 0.7f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+#pragma region Draw chessBoard
 
+		// Activate Shader
+		chessboardShader.Use();
+
+		// Create Projection Matrix
+		glm::mat4 projection_Board(1.0f);
+		//Perspective view 
+		//projection_Board = glm::perspective(glm::radians(camera.GetZoom()), (float)WIDTH / (float)HEIGHT, 0.1f, 100000.0f);
+
+		// Create camera transformation 
+		glm::mat4 view_Board(1.0f);
+		//view_Board = camera.GetViewMatrix();
+
+		// Get the uniform locations for our matrices
+		GLint modelLoc_Board = glGetUniformLocation(chessboardShader.Program, "model");
+		GLint viewLoc_Board = glGetUniformLocation(chessboardShader.Program, "view");
+		GLint projLoc_Board = glGetUniformLocation(chessboardShader.Program, "projection");
+
+		// Pass locations to shaders
+		glUniformMatrix4fv(viewLoc_Board, 1, GL_FALSE, glm::value_ptr(view_Board));
+		glUniformMatrix4fv(projLoc_Board, 1, GL_FALSE, glm::value_ptr(projection_Board));
+
+
+		// Draw container
+		glBindVertexArray(VOA_Board);
+
+		for (GLuint i = 0; i < 8; i++)
+		{
+			for (GLuint j = 0; j < 8; j++)
+			{
+				if ((i + j) % 2 == 0)
+				{
+					// Activate White texture
+					glActiveTexture(GL_TEXTURE0);
+					glBindTexture(GL_TEXTURE_2D, textureWhite);
+					glUniform1i(glGetUniformLocation(chessboardShader.Program, "ourTexture1"), 0);
+				}
+				else
+				{
+					// Activate Black texture
+					glActiveTexture(GL_TEXTURE0);
+					glBindTexture(GL_TEXTURE_2D, textureBlack);
+					glUniform1i(glGetUniformLocation(chessboardShader.Program, "ourTexture1"), 0);
+				}
+
+				// Calculate the model matrix for each object and pass it to the shader before drawing
+				glm::mat4 model_Board(1.0f);
+				glm::vec3 cubePos(cubePositions[i].x, cubePositions[i].y, cubePositions[i].z - j);
+				model_Board = glm::translate(model_Board, cubePos);
+				GLfloat angle = 0.0f;
+				model_Board = glm::rotate(model_Board, angle, glm::vec3(1.0f, 0.0f, 0.0f));
+				glUniformMatrix4fv(modelLoc_Board, 1, GL_FALSE, glm::value_ptr(model_Board));
+
+				glDrawArrays(GL_TRIANGLES, 0, 36);
+			}
+		}
+
+#pragma endregion
 		// DRAW OPENGL WINDOW/VIEWPORT
 		glfwSwapBuffers(window);
 
