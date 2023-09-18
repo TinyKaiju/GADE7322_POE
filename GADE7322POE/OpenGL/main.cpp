@@ -25,23 +25,29 @@ using namespace std;
 //Link Camera File
 #include "Camera.h"  //camera 
 
-
 const GLint WIDTH = 1920, HEIGHT = 1080;
 int SCREEN_WIDTH, SCREEN_HEIGHT; // Replace all screenW & screenH with these
 
-//Declare Callback methods // camera
+// Function declaration
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
-void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 void MouseCallback(GLFWwindow* window, double xPos, double yPos); // Get mouse pos in order to hide it
-void ProcessInput(GLFWwindow* window); // Move camera
-// For Camera
 
-// MAIN FUNCTION for MAIN GAME LOOP
+// Initialise camera values
+Camera camera(glm::vec3(0.0f, 2.0f, 12.0f));
+GLfloat lastX = WIDTH / 2.0f;
+GLfloat lastY = HEIGHT / 2.0f;
+bool keys[1024]; // Array of 1024 different types of keys
+bool firstMouse = true; // Only handling one type of mouse, thus true
+GLfloat deltaTime = 0.0f;
+GLfloat lastFrame = 0.0f;
+
+// Switch Cameras
+bool camLocked = true;
+
 int main()
 {
 	//Initialise GLFW
 	glfwInit();
-
 
 	// GLFW Version Hints	
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -67,14 +73,39 @@ int main()
 
 	glfwMakeContextCurrent(window); //exit
 
+	// Set the required callback functions
+	glfwSetKeyCallback(window, KeyCallback);
+	glfwSetCursorPosCallback(window, MouseCallback);
+
+
+	// Center  and Hide cursor
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	//enable glew
+	glewExperimental = GL_TRUE;
+
+	//Initialize GLEW
+	if (GLEW_OK != glewInit())
+	{
+		cout << "FAILED TO INITIALISE GLEW." << endl;
+		return EXIT_FAILURE;
+	}
+	// Setup OpenGL viewport
+	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	//Enable depth 
+	glEnable(GL_DEPTH_TEST);
+
+	//Enable alpha support
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 #pragma region Height Map
-
-
 	Shader shaderHM("CoreHM.vs", "CoreHM.frag");
 
-	// Create and load texture replace it with your own image path.
 	int widthHM, heightHM, nrChannels;
 
+	//Assign Height map
 	unsigned char* dataHM = SOIL_load_image("res/images/HM1.jpg", &widthHM, &heightHM, &nrChannels, 0);
 
 	// Check if Height Map was loaded succesfully
@@ -90,7 +121,7 @@ int main()
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	vector<GLfloat> verticesHM;
 	GLfloat yScale = 12.0f / 256.0f; //normalize the height map data and scale it to the desired height
-	GLfloat yShift = 10.0f; // translate the elevations to our final desired range
+	GLfloat yShift = 10.0f; //translate map y value
 	int rez = 1;
 	GLuint bytePerPixel = nrChannels;
 
@@ -146,9 +177,9 @@ int main()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesHM.size() * sizeof(unsigned), &indicesHM[0], GL_STATIC_DRAW);
 
 #pragma endregion
-	//Terrain Generation
 
-	#pragma region BUILD AND COMPILE SHADER - CHESSBOARD
+
+#pragma region BUILD AND COMPILE SHADER - CHESSBOARD
 
 	Shader chessboardShader("CoreCB.vs", "CoreCB.frag");
 
@@ -296,11 +327,14 @@ int main()
 #pragma endregion
 
 #pragma endregion
+
 	//Game LOOP
 	while (!glfwWindowShouldClose(window))
 	{
 		// Set frame time
 		GLfloat currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
 
 		// Checks for events and calls corresponding response
 		glfwPollEvents();
@@ -317,11 +351,11 @@ int main()
 		// Create Projection Matrix
 		glm::mat4 projection_Board(1.0f);
 		//Perspective view 
-		//projection_Board = glm::perspective(glm::radians(camera.GetZoom()), (float)WIDTH / (float)HEIGHT, 0.1f, 100000.0f);
+		projection_Board = glm::perspective(glm::radians(camera.GetZoom()), (float)WIDTH / (float)HEIGHT, 0.1f, 100000.0f);
 
 		// Create camera transformation 
 		glm::mat4 view_Board(1.0f);
-		//view_Board = camera.GetViewMatrix();
+		view_Board = camera.GetViewMatrix();
 
 		// Get the uniform locations for our matrices
 		GLint modelLoc_Board = glGetUniformLocation(chessboardShader.Program, "model");
@@ -369,6 +403,7 @@ int main()
 
 #pragma endregion
 
+		//Terrain Generation
 #pragma region Height Map
 
 		// Activate Shader
@@ -398,125 +433,88 @@ int main()
 				GL_UNSIGNED_INT, // index data type
 				(void*)(sizeof(GLuint) * (numTrisPerStrip + 2) * strip)); // offset to starting index
 		}
-		// Terrain Genaeration
 
 		glBindVertexArray(0); // Unbinding
 
 #pragma endregion
+
+
 		// DRAW OPENGL WINDOW/VIEWPORT
 		glfwSwapBuffers(window);
 
 	}
-	void ProcessInput(GLFWwindow* window)
-	{
-		// Freelook Camera controls
-		if (camLocked == false)
-		{
-			if (keys[GLFW_KEY_W])
-			{
-				camera.ProcessKeyboard(FORWARD, deltaTime);
-			}
 
-			if (keys[GLFW_KEY_S])
-			{
-				camera.ProcessKeyboard(BACKWARD, deltaTime);
-			}
-
-			if (keys[GLFW_KEY_A])
-			{
-				camera.ProcessKeyboard(LEFT, deltaTime);
-			}
-
-			if (keys[GLFW_KEY_D])
-			{
-				camera.ProcessKeyboard(RIGHT, deltaTime);
-			}
-		}
+	// Terminate GLFW and clear recources from GLFW
+	glfwTerminate();
 
 
-	}
-
-	// Is called whenever a key is pressed/released via GLFW
-	void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int modifiers)
-	{
-		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		{
-			glfwSetWindowShouldClose(window, GL_TRUE);
-		}
-
-		// For Camera  Enable Camera Switch Camera
-		if (key == GLFW_KEY_TAB && action == GLFW_PRESS)
-		{
-			if (camLocked == true)
-			{
-				camLocked = false;
-			}
-			else
-			{
-				camLocked = true;
-			}
-		}
-		// For Camera
-
-		//Cycle Camera Left
-		if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
-		{
-			camLocked = true;
-			camera.CycleCamera("Left");
-		}
-
-		//Cycle Camera Right
-		if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
-		{
-			camLocked = true;
-			camera.CycleCamera("Right");
-		}
-
-		if (key >= 0 && key < 1024)
-		{
-			if (action == GLFW_PRESS)
-			{
-				keys[key] = true;
-			}
-			else if (action == GLFW_RELEASE)
-			{
-				keys[key] = false;
-			}
-		}
-	}
-
-	// GLFW: whenever the mouse moves, this callback is called
-	void MouseCallback(GLFWwindow* window, double xPos, double yPos)
-	{
-		if (camLocked == false)
-		{
-			if (firstMouse)
-			{
-				lastX = xPos;
-				lastY = yPos;
-				firstMouse = false;
-			}
-
-			GLfloat xOffset = xPos - lastX;
-			GLfloat yOffset = lastY - yPos;  // Reversed since y-coordinates go from bottom to left
-
-			lastX = xPos;
-			lastY = yPos;
-
-			camera.ProcessMouseMovement(xOffset, yOffset);
-		}
-	}
-
-	// GLFW: whenever the mouse scroll wheel scrolls, this callback is called
-	void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
-	{
-		if (camLocked == false)
-		{
-			camera.ProcessMouseScroll(yOffset);
-		}
-
-	}
-	// For Camera Movement
-
+	return EXIT_SUCCESS;
 }
 
+// Is called whenever a key is pressed/released via GLFW
+void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int modifiers)
+{
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+	{
+		glfwSetWindowShouldClose(window, GL_TRUE);
+	}
+
+	// For Camera  Enable Camera Switch Camera
+	if (key == GLFW_KEY_TAB && action == GLFW_PRESS)
+	{
+		if (camLocked == true)
+		{
+			camLocked = false;
+		}
+		else
+		{
+			camLocked = true;
+		}
+	}
+
+	//Cycle Camera Left
+	if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+	{
+		camLocked = true;
+		camera.CycleCamera("Left");
+	}
+
+	//Cycle Camera Right
+	if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
+	{
+		camLocked = true;
+		camera.CycleCamera("Right");
+	}
+
+	if (key >= 0 && key < 1024)
+	{
+		if (action == GLFW_PRESS)
+		{
+			keys[key] = true;
+		}
+		else if (action == GLFW_RELEASE)
+		{
+			keys[key] = false;
+		}
+	}
+}
+
+// GLFW: whenever the mouse moves, this callback is called
+void MouseCallback(GLFWwindow* window, double xPos, double yPos)
+{
+	if (camLocked == false)
+	{
+		if (firstMouse)
+		{
+			lastX = xPos;
+			lastY = yPos;
+			firstMouse = false;
+		}
+
+		GLfloat xOffset = xPos - lastX;
+		GLfloat yOffset = lastY - yPos;  // Reversed since y-coordinates go from bottom to left
+
+		lastX = xPos;
+		lastY = yPos;
+	}
+}

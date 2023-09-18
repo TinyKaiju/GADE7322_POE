@@ -28,7 +28,7 @@ const GLfloat SPEED = 10.0f;
 const GLfloat SENSITIVITY = 0.25f;
 const GLfloat ZOOM = 45.0f;
 
-class Camera 
+class Camera
 {
 private:
 
@@ -68,8 +68,7 @@ private:
         // Recalculate the right and up vectors
         this->right = glm::normalize(glm::cross(this->front, this->worldUp));
         this->up = glm::normalize(glm::cross(this->right, this->front));
-        // Normalise the vectors because their length gets closer to 0 the more you look up and down 
-        // which results in slower movement.
+        // Normalise the vectors for slower movement.
     }
 
 public:
@@ -103,7 +102,6 @@ public:
     }
 
     // Getter for view matrix
-    // Returns view matrix calculated using Euler Angles and the LookAt Matrix
     glm::mat4 GetViewMatrix()
     {
         return glm::lookAt(this->position, this->position + this->front, this->up);
@@ -135,58 +133,13 @@ public:
         }
     }
 
-    // Process Mouse input in x and y directions
-    void ProcessMouseMovement(GLfloat xOffset, GLfloat yOffset, GLboolean constrainPitch = true)
-    {
-        xOffset *= this->mouseSensitivity;
-        yOffset *= this->mouseSensitivity;
-
-        this->yaw += xOffset;
-        this->pitch += yOffset;
-
-        // Make sure that when pitch is out of bounds, screen doesn't get flipped
-        if (constrainPitch)
-        {
-            if (this->pitch > 89.0f)
-            {
-                this->pitch = 89.0f;
-            }
-
-            if (this->pitch < -89.0f)
-            {
-                this->pitch = -89.0f;
-            }
-        }
-        // Update front, right and up vectors using the updated Euler angles
-        this->updateCameraVectors();
-    }
-
-    // Process mouse scroll for zooming
-    void ProcessMouseScroll(GLfloat yOffset)
-    {
-        if (this->zoom >= 1.0f && this->zoom <= 45.0f)
-        {
-            this->zoom -= yOffset;
-        }
-
-        if (this->zoom <= 1.0f)
-        {
-            this->zoom = 1.0f;
-        }
-
-        if (this->zoom >= 45.0f)
-        {
-            this->zoom = 45.0f;
-        }
-    }
-
     // Getter for Zoom variable
     GLfloat GetZoom()
     {
         return this->zoom;
     }
 
-    // Getter for Position variable ***
+    // Getter
     glm::vec3 GetPosition()
     {
         return this->position;
@@ -194,9 +147,10 @@ public:
 
     void CycleCamera(string str)
     {
-        this->worldUp = glm::vec3(0.0f, 1.0f, 0.0f); // Reset worldUp to initialised value
-        this->yaw = -128.1f; // Reset yaw to initialised value
-        this->pitch = -42.4f; // Reset pitch to initialised value
+        //Initial values
+        this->worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+        this->yaw = -128.1f;
+        this->pitch = -42.4f;
 
         if (str == "Left")
         {
@@ -217,7 +171,7 @@ public:
                 this->position = ccPos2;
                 this->yaw = ccPos2Rotate.x;
                 this->pitch = ccPos2Rotate.y;
-                
+
             }
             else
             {
