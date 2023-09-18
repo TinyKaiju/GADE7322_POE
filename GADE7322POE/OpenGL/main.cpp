@@ -288,9 +288,19 @@ int main()
 		glm::vec3(4.0f, 0.0f, 4.0f)
 	};
 
+	float randY[8][8];
+
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			randY[i][j] = (((rand() % 3)) * 0.1f) - 0.1f;
+		}
+	}
+
 	glm::vec3 borderPositions[] =
 	{
-		glm::vec3(-3.75f, 0.0f, 4.0f),
+		glm::vec3(-3.75f, 0, 4.0f),
 		glm::vec3(4.75f, 0.0f, 4.0f),
 		glm::vec3(-3.75f, 0.0f, -3.75f),
 		glm::vec3(4.75f, 0.0f, 4.75f),
@@ -472,7 +482,7 @@ int main()
 
 				// Calculate the model matrix for each object and pass it to the shader before drawing
 				glm::mat4 model_Board(1.0f);
-				glm::vec3 cubePos(cubePositions[i].x, cubePositions[i].y, cubePositions[i].z - j);
+				glm::vec3 cubePos(cubePositions[i].x, randY[i][j], cubePositions[i].z - j);
 				model_Board = glm::translate(model_Board, cubePos);
 				GLfloat angle = 0.0f;
 				model_Board = glm::rotate(model_Board, angle, glm::vec3(1.0f, 0.0f, 0.0f));
