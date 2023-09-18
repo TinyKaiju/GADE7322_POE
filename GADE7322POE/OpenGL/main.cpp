@@ -29,11 +29,19 @@ using namespace std;
 const GLint WIDTH = 1920, HEIGHT = 1080;
 int SCREEN_WIDTH, SCREEN_HEIGHT; // Replace all screenW & screenH with these
 
+//Declare Callback methods // camera
+void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
+void MouseCallback(GLFWwindow* window, double xPos, double yPos); // Get mouse pos in order to hide it
+void ProcessInput(GLFWwindow* window); // Move camera
+// For Camera
+
 // MAIN FUNCTION for MAIN GAME LOOP
 int main()
 {
 	//Initialise GLFW
 	glfwInit();
+
 
 	// GLFW Version Hints	
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
