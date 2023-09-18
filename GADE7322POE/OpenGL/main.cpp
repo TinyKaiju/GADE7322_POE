@@ -230,6 +230,51 @@ int main()
 		-0.5f,  0.5f, -0.5f,    0.0f, 1.0f // Top
 	};
 
+	GLfloat verticesBorder[] =
+	{
+		//Positions                //Texture Coords
+		-0.25f, 0.0f, -0.25f,        0.0f, 0.0f,
+		0.25f, 0.0f, -0.25f,        1.0f, 0.0f,
+		0.25f,  0.5f, -0.25f,        1.0f, 1.0f,
+		0.25f,  0.5f, -0.25f,        1.0f, 1.0f,
+		-0.25f,  0.5f, -0.25f,    0.0f, 1.0f,
+		-0.25f, 0.0f, -0.25f,        0.0f, 0.0f, // Left
+
+		-0.25f, 0.0f,  0.25f,        0.0f, 0.0f,
+		0.25f, 0.0f,  0.25f,        1.0f, 0.0f,
+		0.25f,  0.5f,  0.25f,        1.0f, 1.0f,
+		0.25f,  0.5f,  0.25f,        1.0f, 1.0f,
+		-0.25f,  0.5f,  0.25f,    0.0f, 1.0f,
+		-0.25f, 0.0f,  0.25f,        0.0f, 0.0f, // Right
+
+		-0.25f,  0.5f,  0.25f,    1.0f, 0.0f,
+		-0.25f,  0.5f, -0.25f,    1.0f, 1.0f,
+		-0.25f, 0.0f, -0.25f,        0.0f, 1.0f,
+		-0.25f, 0.0f, -0.25f,        0.0f, 1.0f,
+		-0.25f, 0.0f,  0.25f,        0.0f, 0.0f,
+		-0.25f,  0.5f,  0.25f,    1.0f, 0.0f, // Back
+
+		0.25f,  0.5f,  0.25f,        1.0f, 0.0f,
+		0.25f,  0.5f, -0.25f,        1.0f, 1.0f,
+		0.25f, 0.0f, -0.25f,        0.0f, 1.0f,
+		0.25f, 0.0f, -0.25f,        0.0f, 1.0f,
+		0.25f, 0.0f,  0.25f,        0.0f, 0.0f,
+		0.25f,  0.5f,  0.25f,        1.0f, 0.0f, // Front
+
+		-0.25f, 0.0f, -0.25f,        0.0f, 1.0f,
+		0.25f, 0.0f, -0.25f,        1.0f, 1.0f,
+		0.25f, 0.0f,  0.25f,        1.0f, 0.0f,
+		0.25f, 0.0f,  0.25f,        1.0f, 0.0f,
+		-0.25f, 0.0f,  0.25f,        0.0f, 0.0f,
+		-0.25f, 0.0f, -0.25f,        0.0f, 1.0f, // Bottom
+
+		-0.25f,  0.5f, -0.25f,    0.0f, 1.0f,
+		0.25f,  0.5f, -0.25f,        1.0f, 1.0f,
+		0.25f,  0.5f,  0.25f,        1.0f, 0.0f,
+		0.25f,  0.5f,  0.25f,        1.0f, 0.0f,
+		-0.25f,  0.5f,  0.25f,    0.0f, 0.0f,
+		-0.25f,  0.5f, -0.25f,    0.0f, 1.0f // Top
+	};
 	// Positions of different cubes
 	glm::vec3 cubePositions[] =
 	{
@@ -241,6 +286,16 @@ int main()
 		glm::vec3(2.0f, 0.0f, 4.0f),
 		glm::vec3(3.0f, 0.0f, 4.0f),
 		glm::vec3(4.0f, 0.0f, 4.0f)
+	};
+
+	glm::vec3 borderPositions[] =
+	{
+		glm::vec3(-3.75f, 0.0f, 4.0f),
+		glm::vec3(4.75f, 0.0f, 4.0f),
+		glm::vec3(-3.75f, 0.0f, -3.75f),
+		glm::vec3(4.75f, 0.0f, 4.75f),
+		glm::vec3(-3.75f, 0.0f, 4.75f),
+		glm::vec3(4.75f, 0.0f, -3.75f)
 	};
 
 	// Generate the vertex arrays and vertex buffers and save them into variables
@@ -269,7 +324,7 @@ int main()
 #pragma region Chessboard Texture
 
 	// Chessboard texture variables
-	GLuint textureWhite, textureBlack;
+	GLuint textureWhite, textureBlack, textureGrey;
 	int widthB, heightB;
 #pragma endregion
 
@@ -322,6 +377,32 @@ int main()
 	// Generate mipmaps
 	glGenerateMipmap(GL_TEXTURE_2D);
 	SOIL_free_image_data(blackBlock);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+#pragma endregion
+#pragma region Grey Texture
+
+	//Create Black texture
+	glGenTextures(1, &textureGrey);
+	glBindTexture(GL_TEXTURE_2D, textureGrey);
+
+	//Set texture parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	//Set texture filtering
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	//Load texture
+	unsigned char* greyBlock = SOIL_load_image("res/images/grey.png", &widthB, &heightB, 0, SOIL_LOAD_RGBA);
+
+	//Specify 2D texture image
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthB, heightB, 0, GL_RGBA, GL_UNSIGNED_BYTE, greyBlock);
+
+	// Generate mipmaps
+	glGenerateMipmap(GL_TEXTURE_2D);
+	SOIL_free_image_data(greyBlock);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 #pragma endregion
@@ -401,6 +482,69 @@ int main()
 			}
 		}
 
+		for (GLuint i = 0; i < 2; i++)
+		{
+			for (GLuint j = 0; j < 8; j++)
+			{
+				// Activate White texture
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, textureGrey);
+				glUniform1i(glGetUniformLocation(chessboardShader.Program, "faceTexture"), 0);
+
+				// Calculate the model matrix for each object and pass it to the shader before drawing
+				glm::mat4 model_Board(1.0f);
+				glm::vec3 cubePos(borderPositions[i].z - j, borderPositions[i].y, borderPositions[i].x);
+				model_Board = glm::translate(model_Board, cubePos);
+				GLfloat angle = 0.0f;
+				glm::vec3 scale(1, 1, 0.5f);
+				model_Board = glm::scale(model_Board, scale);
+				model_Board = glm::rotate(model_Board, angle, glm::vec3(1.0f, 0.0f, 0.0f));
+				glUniformMatrix4fv(modelLoc_Board, 1, GL_FALSE, glm::value_ptr(model_Board));
+
+				glDrawArrays(GL_TRIANGLES, 0, 36);
+			}
+		}
+		for (GLuint i = 0; i < 2; i++)
+		{
+			for (GLuint j = 0; j < 8; j++)
+			{
+				// Activate White texture
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, textureGrey);
+				glUniform1i(glGetUniformLocation(chessboardShader.Program, "faceTexture"), 0);
+
+				// Calculate the model matrix for each object and pass it to the shader before drawing
+				glm::mat4 model_Board(1.0f);
+				glm::vec3 cubePos(borderPositions[i].x, borderPositions[i].y, borderPositions[i].z - j);
+				model_Board = glm::translate(model_Board, cubePos);
+				GLfloat angle = 0.0f;
+				glm::vec3 scale(0.5f, 1, 1);
+				model_Board = glm::scale(model_Board, scale);
+				model_Board = glm::rotate(model_Board, angle, glm::vec3(1.0f, 0.0f, 0.0f));
+				glUniformMatrix4fv(modelLoc_Board, 1, GL_FALSE, glm::value_ptr(model_Board));
+
+				glDrawArrays(GL_TRIANGLES, 0, 36);
+			}
+		}
+
+		for (int i = 2; i < 6; i++)
+		{
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, textureGrey);
+			glUniform1i(glGetUniformLocation(chessboardShader.Program, "faceTexture"), 0);
+
+			glm::mat4 model_Board(1.0f);
+			glm::vec3 cubePos(borderPositions[i].x, borderPositions[i].y, borderPositions[i].z);
+			model_Board = glm::translate(model_Board, cubePos);
+			GLfloat angle = 0.0f;
+
+			glm::vec3 scale(0.5f, 1, 0.5f);
+			model_Board = glm::scale(model_Board, scale);
+			model_Board = glm::rotate(model_Board, angle, glm::vec3(1.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc_Board, 1, GL_FALSE, glm::value_ptr(model_Board));
+
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 #pragma endregion
 
 		//Terrain Generation
