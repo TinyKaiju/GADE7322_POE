@@ -49,12 +49,12 @@ private:
     GLfloat zoom;
 
     // Cycle Camera Positions
-    glm::vec3 ccPos1 = glm::vec3(0, 15, 0);
-    glm::vec2 ccPos1Rotate = glm::vec2(0, -90);
-    glm::vec3 ccPos2 = glm::vec3(0, 7, 10);
-    glm::vec2 ccPos2Rotate = glm::vec2(-90, -40);
-    glm::vec3 ccPos3 = glm::vec3(7, 2, 7);
-    glm::vec2 ccPos3Rotate = glm::vec2(-135, -10);
+    glm::vec3 camPos1 = glm::vec3(0, 15, 0);
+    glm::vec2 camRotate1 = glm::vec2(0, -90);
+    glm::vec3 camPos2 = glm::vec3(0, 7, 10);
+    glm::vec2 camRotate2 = glm::vec2(-90, -40);
+    glm::vec3 camPos3 = glm::vec3(7, 2, 7);
+    glm::vec2 camRotate3 = glm::vec2(-135, -10);
 
     void updateCameraVectors()
     {
@@ -154,57 +154,57 @@ public:
 
         if (str == "Left")
         {
-            if (this->position == ccPos1)
+            if (this->position == camPos1)
             {
-                this->position = ccPos3;
-                this->yaw = ccPos3Rotate.x;
-                this->pitch = ccPos3Rotate.y;
+                this->position = camPos3;
+                this->yaw = camRotate3.x;
+                this->pitch = camRotate3.y;
             }
-            else if (this->position == ccPos2)
+            else if (this->position == camPos2)
             {
-                this->position = ccPos1;
-                this->yaw = ccPos1Rotate.x;
-                this->pitch = ccPos1Rotate.y;
+                this->position = camPos1;
+                this->yaw = camRotate1.x;
+                this->pitch = camRotate1.y;
             }
-            else if (this->position == ccPos3)
+            else if (this->position == camPos3)
             {
-                this->position = ccPos2;
-                this->yaw = ccPos2Rotate.x;
-                this->pitch = ccPos2Rotate.y;
+                this->position = camPos2;
+                this->yaw = camRotate2.x;
+                this->pitch = camRotate2.y;
 
             }
             else
             {
-                this->position = ccPos1;
-                this->yaw = ccPos1Rotate.x;
-                this->pitch = ccPos1Rotate.y;
+                this->position = camPos1;
+                this->yaw = camRotate1.x;
+                this->pitch = camRotate1.y;
             }
         }
         else
         {
-            if (this->position == ccPos1)
+            if (this->position == camPos1)
             {
-                this->position = ccPos2;
-                this->yaw = ccPos2Rotate.x;
-                this->pitch = ccPos2Rotate.y;
+                this->position = camPos2;
+                this->yaw = camRotate2.x;
+                this->pitch = camRotate2.y;
             }
-            else if (this->position == ccPos2)
+            else if (this->position == camPos2)
             {
-                this->position = ccPos3;
-                this->yaw = ccPos3Rotate.x;
-                this->pitch = ccPos3Rotate.y;
+                this->position = camPos3;
+                this->yaw = camRotate3.x;
+                this->pitch = camRotate3.y;
             }
-            else if (this->position == ccPos3)
+            else if (this->position == camPos3)
             {
-                this->position = ccPos1;
-                this->yaw = ccPos1Rotate.x;
-                this->pitch = ccPos1Rotate.y;
+                this->position = camPos1;
+                this->yaw = camRotate1.x;
+                this->pitch = camRotate1.y;
             }
             else
             {
-                this->position = ccPos1;
-                this->yaw = ccPos1Rotate.x;
-                this->pitch = ccPos1Rotate.y;
+                this->position = camPos1;
+                this->yaw = camRotate1.x;
+                this->pitch = camRotate1.y;
             }
         }
 
