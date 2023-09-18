@@ -407,5 +407,116 @@ int main()
 		glfwSwapBuffers(window);
 
 	}
+	void ProcessInput(GLFWwindow* window)
+	{
+		// Freelook Camera controls
+		if (camLocked == false)
+		{
+			if (keys[GLFW_KEY_W])
+			{
+				camera.ProcessKeyboard(FORWARD, deltaTime);
+			}
+
+			if (keys[GLFW_KEY_S])
+			{
+				camera.ProcessKeyboard(BACKWARD, deltaTime);
+			}
+
+			if (keys[GLFW_KEY_A])
+			{
+				camera.ProcessKeyboard(LEFT, deltaTime);
+			}
+
+			if (keys[GLFW_KEY_D])
+			{
+				camera.ProcessKeyboard(RIGHT, deltaTime);
+			}
+		}
+
+
+	}
+
+	// Is called whenever a key is pressed/released via GLFW
+	void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int modifiers)
+	{
+		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		{
+			glfwSetWindowShouldClose(window, GL_TRUE);
+		}
+
+		// For Camera  Enable Camera Switch Camera
+		if (key == GLFW_KEY_TAB && action == GLFW_PRESS)
+		{
+			if (camLocked == true)
+			{
+				camLocked = false;
+			}
+			else
+			{
+				camLocked = true;
+			}
+		}
+		// For Camera
+
+		//Cycle Camera Left
+		if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+		{
+			camLocked = true;
+			camera.CycleCamera("Left");
+		}
+
+		//Cycle Camera Right
+		if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
+		{
+			camLocked = true;
+			camera.CycleCamera("Right");
+		}
+
+		if (key >= 0 && key < 1024)
+		{
+			if (action == GLFW_PRESS)
+			{
+				keys[key] = true;
+			}
+			else if (action == GLFW_RELEASE)
+			{
+				keys[key] = false;
+			}
+		}
+	}
+
+	// GLFW: whenever the mouse moves, this callback is called
+	void MouseCallback(GLFWwindow* window, double xPos, double yPos)
+	{
+		if (camLocked == false)
+		{
+			if (firstMouse)
+			{
+				lastX = xPos;
+				lastY = yPos;
+				firstMouse = false;
+			}
+
+			GLfloat xOffset = xPos - lastX;
+			GLfloat yOffset = lastY - yPos;  // Reversed since y-coordinates go from bottom to left
+
+			lastX = xPos;
+			lastY = yPos;
+
+			camera.ProcessMouseMovement(xOffset, yOffset);
+		}
+	}
+
+	// GLFW: whenever the mouse scroll wheel scrolls, this callback is called
+	void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
+	{
+		if (camLocked == false)
+		{
+			camera.ProcessMouseScroll(yOffset);
+		}
+
+	}
+	// For Camera Movement
+
 }
 
