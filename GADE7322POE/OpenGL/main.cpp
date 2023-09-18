@@ -55,6 +55,87 @@ int main()
 
 	glfwMakeContextCurrent(window); //exit
 
+#pragma region Height Map
+
+
+	Shader shaderHM("CoreHM.vs", "CoreHM.frag");
+
+	// Create and load texture replace it with your own image path.
+	int widthHM, heightHM, nrChannels;
+
+	unsigned char* dataHM = SOIL_load_image("res/images/HM1.jpg", &widthHM, &heightHM, &nrChannels, 0);
+
+	// Check if Height Map was loaded succesfully
+	if (dataHM)
+	{
+		cout << "Loaded heightmap of size " << heightHM << " x " << widthHM << endl;
+	}
+	else
+	{
+		cout << "Failed to load texture" << endl;
+	}
+
+	// set up vertex data (and buffer(s)) and configure vertex attributes
+	vector<GLfloat> verticesHM;
+	GLfloat yScale = 12.0f / 256.0f; //normalize the height map data and scale it to the desired height
+	GLfloat yShift = 10.0f; // translate the elevations to our final desired range
+	int rez = 1;
+	GLuint bytePerPixel = nrChannels;
+
+	for (int i = 0; i < heightHM; i++)
+	{
+		for (int j = 0; j < widthHM; j++)
+		{
+			unsigned char* pixelOffset = dataHM + (j + widthHM * i) * bytePerPixel;
+			unsigned char y = pixelOffset[0];
+
+			// vertex
+			verticesHM.push_back(-heightHM / 2.0f + heightHM * i / (float)heightHM); // vx
+			verticesHM.push_back((int)y * yScale - yShift); // vy
+			verticesHM.push_back(-widthHM / 2.0f + widthHM * j / (float)widthHM); // vz
+		}
+	}
+	cout << "Loaded " << verticesHM.size() / 3 << " vertices" << endl;
+	SOIL_free_image_data(dataHM);
+
+	vector<GLuint> indicesHM;
+	for (int i = 0; i < heightHM - 1; i += rez)
+	{
+		for (int j = 0; j < widthHM; j += rez)
+		{
+			for (int k = 0; k < 2; k++)
+			{
+				indicesHM.push_back(j + widthHM * (i + k * rez));
+			}
+		}
+	}
+	cout << "Loaded " << indicesHM.size() << " indices" << endl;
+
+	const int numStrips = (heightHM - 1) / rez;
+	const int numTrisPerStrip = (widthHM / rez) * 2 - 2;
+	cout << "Created lattice of " << numStrips << " strips with " << numTrisPerStrip << " triangles each" << endl;
+	cout << "Created " << numStrips * numTrisPerStrip << " triangles total" << endl;
+
+	// Generate the vertex arrays, vertex buffers and index buffers and save them into variables
+	unsigned int VAO, VBO, IBO;
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, verticesHM.size() * sizeof(float), &verticesHM[0], GL_STATIC_DRAW);
+
+	// Position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glGenBuffers(1, &IBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesHM.size() * sizeof(unsigned), &indicesHM[0], GL_STATIC_DRAW);
+
+#pragma endregion
+	//Terrain Generation
+
 	#pragma region BUILD AND COMPILE SHADER - CHESSBOARD
 
 	Shader chessboardShader("CoreCB.vs", "CoreCB.frag");
@@ -273,6 +354,41 @@ int main()
 				glDrawArrays(GL_TRIANGLES, 0, 36);
 			}
 		}
+
+#pragma endregion
+
+#pragma region Height Map
+
+		// Activate Shader
+		shaderHM.Use();
+
+		// view/projection transformations
+		glm::mat4 projectionHM = glm::perspective(glm::radians(camera.GetZoom()), (float)WIDTH / (float)HEIGHT, 0.1f, 100000.0f);
+		glm::mat4 viewHM = camera.GetViewMatrix();
+		GLint projLocHM = glGetUniformLocation(shaderHM.Program, "projection");
+		GLint viewLocHM = glGetUniformLocation(shaderHM.Program, "view");
+
+		glUniformMatrix4fv(viewLocHM, 1, GL_FALSE, glm::value_ptr(viewHM));
+		glUniformMatrix4fv(projLocHM, 1, GL_FALSE, glm::value_ptr(projectionHM));
+
+		// world transformation
+		glm::mat4 modelHM = glm::mat4(1.0f);
+		GLint modelLocHM = glGetUniformLocation(shaderHM.Program, "model");
+		glUniformMatrix4fv(modelLocHM, 1, GL_FALSE, glm::value_ptr(modelHM));
+
+		// Draw container
+		glBindVertexArray(VAO);
+
+		for (int strip = 0; strip < numStrips; strip++)
+		{
+			glDrawElements(GL_TRIANGLE_STRIP, // primitive type
+				numTrisPerStrip + 2, // number of indices to render
+				GL_UNSIGNED_INT, // index data type
+				(void*)(sizeof(GLuint) * (numTrisPerStrip + 2) * strip)); // offset to starting index
+		}
+		// Terrain Genaeration
+
+		glBindVertexArray(0); // Unbinding
 
 #pragma endregion
 		// DRAW OPENGL WINDOW/VIEWPORT
