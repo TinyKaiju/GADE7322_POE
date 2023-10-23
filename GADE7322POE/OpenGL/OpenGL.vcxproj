@@ -155,6 +155,7 @@
     <Text Include="res\3D models\OBJ Files\knight.txt" />
     <Text Include="res\3D models\OBJ Files\pawn.txt" />
     <Text Include="res\3D models\OBJ Files\queen.txt" />
+    <Text Include="res\3D models\OBJ Files\rook.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -74,5 +74,8 @@
     <Text Include="res\3D models\OBJ Files\bishop.txt">
       <Filter>ChessPieces</Filter>
     </Text>
+    <Text Include="res\3D models\OBJ Files\rook.txt">
+      <Filter>ChessPieces</Filter>
+    </Text>
   </ItemGroup>
 </Project>

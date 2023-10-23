@@ -612,15 +612,14 @@ int main()
 #pragma endregion
 
 #pragma region Rook
-/*
 	//Build & Compile Shader Program for Pawn Pieces
 	Shader ourShaderRook("CoreCB.vs", "CoreCB.frag");
 
 	// Vertex data for our pawn piece
-	GLfloat verticesRook[8088*3];
+	GLfloat verticesRook[24876];
 
 	// Read Vertex data from pawn.txt file //
-	ifstream myFile2("rook piece.txt");
+	ifstream myFile2("res/3D models/OBJ Files/rook.txt");
 	i = 0;
 
 	if (myFile2.is_open())
@@ -742,7 +741,7 @@ int main()
 	glGenerateMipmap(GL_TEXTURE_2D);
 	SOIL_free_image_data(rookImageB);
 	glBindTexture(GL_TEXTURE_2D, 0);
-*/
+
 #pragma endregion
 
 #pragma region Bishop
@@ -1522,7 +1521,7 @@ int main()
 #pragma endregion
 		
 #pragma region Draw Rook
-/*
+
 		// Activate Shader
 		ourShaderRook.Use();
 
@@ -1571,10 +1570,10 @@ int main()
 
 			glUniformMatrix4fv(modelLoc_Rook, 1, GL_FALSE, glm::value_ptr(model_Rook));
 
-			glDrawArrays(GL_TRIANGLES, 0, 8088); //number of lines times by 2
+			glDrawArrays(GL_TRIANGLES, 0, 8292); //number of lines times by 2
 
 		}
-		*/
+
 #pragma endregion
 		
 #pragma region Draw Bishop
