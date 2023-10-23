@@ -744,6 +744,11 @@ int main()
 
 #pragma endregion
 
+
+#pragma endregion
+
+#pragma endregion
+
 #pragma region Bishop
 
 	//Build & Compile Shader Program for Pawn Pieces
@@ -1026,11 +1031,6 @@ int main()
 */
 #pragma endregion
 
-
-
-
-
-#pragma endregion
 
 #pragma region Queen
 
@@ -1315,9 +1315,6 @@ int main()
 #pragma endregion
 
 
-#pragma endregion
-
-
 
 
 
@@ -1570,10 +1567,10 @@ int main()
 
 			glUniformMatrix4fv(modelLoc_Rook, 1, GL_FALSE, glm::value_ptr(model_Rook));
 
-			glDrawArrays(GL_TRIANGLES, 0, 8292); //number of lines times by 2
+			glDrawArrays(GL_TRIANGLES, 0, 8088); //number of lines times by 2
 
 		}
-
+		
 #pragma endregion
 		
 #pragma region Draw Bishop
