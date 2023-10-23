@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +145,12 @@
     <None Include="CoreCB.vs" />
     <None Include="CoreHM.frag" />
     <None Include="CoreHM.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GADEChessboard.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="pawn.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

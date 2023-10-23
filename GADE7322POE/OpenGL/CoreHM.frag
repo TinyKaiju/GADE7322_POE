@@ -5,9 +5,9 @@ in float Height;
 
 out vec4 color;
 
-uniform sampler2D ourTexture1;
+uniform sampler2D ourHM_texture;
 
 void main()
 {
-    color = texture(ourTexture1, TexCoord);
+    color = texture(ourHM_texture, TexCoord);
 };
