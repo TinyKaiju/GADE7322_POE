@@ -199,7 +199,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* HM_Image = SOIL_load_image("res/images/Paper texture.jpg", &width_HM, &height_HM, 0, SOIL_LOAD_RGBA);
+	unsigned char* HM_Image = SOIL_load_image("res/images/water.png", &width_HM, &height_HM, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width_HM, height_HM, 0, GL_RGBA, GL_UNSIGNED_BYTE, HM_Image);
@@ -1036,7 +1036,7 @@ int main()
 	Shader ourShaderQueen("coreCB.vs", "coreCB.frag");
 
 	// Vertex data for our pawn piece
-	GLfloat verticesQueen[22860];
+	GLfloat verticesQueen[39600];
 
 	// Read Vertex data from pawn.txt file //
 	ifstream myFile5("res/3D models/OBJ Files/queen.txt");
@@ -1734,7 +1734,7 @@ int main()
 
 			glUniformMatrix4fv(modelLoc_Queen, 1, GL_FALSE, glm::value_ptr(model_Queen));
 
-			glDrawArrays(GL_TRIANGLES, 0, 7620); //number of lines times by 2
+			glDrawArrays(GL_TRIANGLES, 0, 13200); //number of lines times by 2
 
 		}
 #pragma endregion
