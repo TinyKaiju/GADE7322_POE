@@ -62,7 +62,16 @@
     <Text Include="res\3D models\OBJ Files\pawn.txt">
       <Filter>ChessPieces</Filter>
     </Text>
-    <Text Include="res\3D models\OBJ Files\pawn2.txt">
+    <Text Include="res\3D models\OBJ Files\king.txt">
+      <Filter>ChessPieces</Filter>
+    </Text>
+    <Text Include="res\3D models\OBJ Files\queen.txt">
+      <Filter>ChessPieces</Filter>
+    </Text>
+    <Text Include="res\3D models\OBJ Files\knight.txt">
+      <Filter>ChessPieces</Filter>
+    </Text>
+    <Text Include="res\3D models\OBJ Files\bishop.txt">
       <Filter>ChessPieces</Filter>
     </Text>
   </ItemGroup>

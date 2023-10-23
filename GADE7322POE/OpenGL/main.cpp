@@ -464,7 +464,7 @@ int main()
 
 	// Read Vertex data from pawn.txt file //
 
-	ifstream myFile("res/3D models/OBJ Files/pawn2.txt");
+	ifstream myFile("res/3D models/OBJ Files/pawn.txt");
 	i = 0;
 
 	if (myFile.is_open())
@@ -610,9 +610,9 @@ int main()
 
 
 #pragma endregion
-/*
-#pragma region Rook
 
+#pragma region Rook
+/*
 	//Build & Compile Shader Program for Pawn Pieces
 	Shader ourShaderRook("CoreCB.vs", "CoreCB.frag");
 
@@ -742,17 +742,7 @@ int main()
 	glGenerateMipmap(GL_TEXTURE_2D);
 	SOIL_free_image_data(rookImageB);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-#pragma endregion
-
-
-
-#pragma endregion
-
-
-
-
-
+*/
 #pragma endregion
 
 #pragma region Bishop
@@ -761,10 +751,10 @@ int main()
 	Shader ourShaderBishop("coreCB.vs", "coreCB.frag");
 
 	// Vertex data for our pawn piece
-	GLfloat verticesBishop[17676];
+	GLfloat verticesBishop[65538];
 
 	// Read Vertex data from pawn.txt file //
-	ifstream myFile3("pawn.txt");
+	ifstream myFile3("res/3D models/OBJ Files/bishop.txt");
 	i = 0;
 
 	if (myFile3.is_open())
@@ -887,7 +877,6 @@ int main()
 	glGenerateMipmap(GL_TEXTURE_2D);
 	SOIL_free_image_data(bishopImageB);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
 #pragma endregion
 
 
@@ -901,15 +890,15 @@ int main()
 #pragma endregion
 
 #pragma region Knight
-
+/*
 	//Build & Compile Shader Program for Pawn Pieces
 	Shader ourShaderKnight("coreCB.vs", "coreCB.frag");
 
 	// Vertex data for our pawn piece
-	GLfloat verticesKnight[17676];
+	GLfloat verticesKnight[133092];
 
 	// Read Vertex data from pawn.txt file //
-	ifstream myFile4("pawn.txt");
+	ifstream myFile4("res/3D models/OBJ Files/knight.txt");
 	i = 0;
 
 	if (myFile4.is_open())
@@ -1035,7 +1024,7 @@ int main()
 #pragma endregion
 
 
-
+*/
 #pragma endregion
 
 
@@ -1050,10 +1039,10 @@ int main()
 	Shader ourShaderQueen("coreCB.vs", "coreCB.frag");
 
 	// Vertex data for our pawn piece
-	GLfloat verticesQueen[17676];
+	GLfloat verticesQueen[22860];
 
 	// Read Vertex data from pawn.txt file //
-	ifstream myFile5("pawn.txt");
+	ifstream myFile5("res/3D models/OBJ Files/queen.txt");
 	i = 0;
 
 	if (myFile5.is_open())
@@ -1191,10 +1180,10 @@ int main()
 	Shader ourShaderKing("coreCB.vs", "coreCB.frag");
 
 	// Vertex data for our pawn piece
-	GLfloat verticesKing[17676];
+	GLfloat verticesKing[22860];
 
 	// Read Vertex data from pawn.txt file //
-	ifstream myFile6("pawn.txt");
+	ifstream myFile6("res/3D models/OBJ Files/king.txt");
 	i = 0;
 
 	if (myFile6.is_open())
@@ -1316,7 +1305,16 @@ int main()
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 #pragma endregion
-*/
+
+
+#pragma endregion
+
+
+
+
+
+#pragma endregion
+
 
 #pragma endregion
 
@@ -1325,6 +1323,7 @@ int main()
 
 
 #pragma endregion
+
 #pragma endregion
 
 	//Game LOOP
@@ -1521,9 +1520,9 @@ int main()
 
 		}
 #pragma endregion
-/*
+		
 #pragma region Draw Rook
-
+/*
 		// Activate Shader
 		ourShaderRook.Use();
 
@@ -1575,8 +1574,9 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 0, 8088); //number of lines times by 2
 
 		}
+		*/
 #pragma endregion
-
+		
 #pragma region Draw Bishop
 
 		// Activate Shader
@@ -1628,13 +1628,13 @@ int main()
 
 			glUniformMatrix4fv(modelLoc_Bishop, 1, GL_FALSE, glm::value_ptr(model_Bishop));
 
-			glDrawArrays(GL_TRIANGLES, 0, 5892); //number of lines times by 2
+			glDrawArrays(GL_TRIANGLES, 0, 21864); //number of lines times by 2
 
 		}
 #pragma endregion
 
 #pragma region Draw Knight
-
+		/*
 		// Activate Shader
 		ourShaderKnight.Use();
 
@@ -1684,11 +1684,11 @@ int main()
 
 			glUniformMatrix4fv(modelLoc_Knight, 1, GL_FALSE, glm::value_ptr(model_Knight));
 
-			glDrawArrays(GL_TRIANGLES, 0, 5892); //number of lines times by 2
+			glDrawArrays(GL_TRIANGLES, 0, 44364); //number of lines times by 2
 
 		}
 #pragma endregion
-
+*/
 #pragma region Draw Queen
 
 		// Activate Shader
@@ -1740,7 +1740,7 @@ int main()
 
 			glUniformMatrix4fv(modelLoc_Queen, 1, GL_FALSE, glm::value_ptr(model_Queen));
 
-			glDrawArrays(GL_TRIANGLES, 0, 5892); //number of lines times by 2
+			glDrawArrays(GL_TRIANGLES, 0, 7620); //number of lines times by 2
 
 		}
 #pragma endregion
@@ -1796,11 +1796,11 @@ int main()
 
 			glUniformMatrix4fv(modelLoc_King, 1, GL_FALSE, glm::value_ptr(model_King));
 
-			glDrawArrays(GL_TRIANGLES, 0, 5892); //number of lines times by 2
+			glDrawArrays(GL_TRIANGLES, 0, 7620); //number of lines times by 2
 
 		}
 #pragma endregion
-*/
+		
 #pragma endregion
 		//Terrain Generation
 #pragma region Height Map
