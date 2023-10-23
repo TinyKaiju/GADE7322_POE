@@ -46,7 +46,6 @@ bool camLocked = true;
 bool animate = false;
 
 GLfloat AnimateCPRotation();
-glm::vec3 AnimateCPSlide(glm::vec3 pos);
 glm::vec3 AnimatePosition(glm::vec3 pos);
 
 int main()
