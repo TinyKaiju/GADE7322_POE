@@ -43,6 +43,11 @@ GLfloat lastFrame = 0.0f;
 
 // Switch Cameras
 bool camLocked = true;
+bool animate = false;
+
+GLfloat AnimateCPRotation();
+glm::vec3 AnimateCPSlide(glm::vec3 pos);
+glm::vec3 AnimatePosition(glm::vec3 pos);
 
 int main()
 {
@@ -1504,9 +1509,13 @@ int main()
 
 			// Calculate the model matrix for each object and pass it to the shader before drawing
 			glm::mat4 model_Pawn(1.0f);
-			model_Pawn = glm::translate(model_Pawn, pawnPositions[i]); // Original code 
-			GLfloat angle = 0.0f; // Original code
-			model_Pawn = glm::rotate(model_Pawn, angle, glm::vec3(1.0f, 0.0f, 0.0f)); // Original code
+
+			glm::vec3 newPos = AnimatePosition(pawnPositions[i]);
+			model_Pawn = glm::translate(model_Pawn, newPos); // Original code 
+			GLfloat angle = AnimateCPRotation(); //for animation
+
+			// Handles Piece Rotation
+			model_Pawn = glm::rotate(model_Pawn, angle, glm::vec3(1.0f, 0.0f, 0.0f));
 
 			glUniformMatrix4fv(modelLoc_Pawn, 1, GL_FALSE, glm::value_ptr(model_Pawn));
 
@@ -1565,7 +1574,7 @@ int main()
 
 			glUniformMatrix4fv(modelLoc_Rook, 1, GL_FALSE, glm::value_ptr(model_Rook));
 
-			glDrawArrays(GL_TRIANGLES, 0, 8088); //number of lines times by 2
+			glDrawArrays(GL_TRIANGLES, 0, 7620); //number of lines times by 2
 
 		}
 		
@@ -1672,9 +1681,13 @@ int main()
 
 			// Calculate the model matrix for each object and pass it to the shader before drawing
 			glm::mat4 model_Knight(1.0f);
-			model_Knight = glm::translate(model_Knight, knightPositions[i]); // Original code 
-			GLfloat angle = 0.0f; // Original code
-			model_Knight = glm::rotate(model_Knight, angle, glm::vec3(1.0f, 0.0f, 0.0f)); // Original code
+
+			glm::vec3 newPos = AnimatePosition(knightPositions[i]);
+			model_Knight = glm::translate(model_Knight, newPos); // Original code 
+			GLfloat angleK = AnimateCPRotation(); //for animation
+
+			// Handles Piece Rotation
+			model_Knight = glm::rotate(model_Knight, angleK, glm::vec3(0.0f, 1.0f, 0.0f));
 
 			glUniformMatrix4fv(modelLoc_Knight, 1, GL_FALSE, glm::value_ptr(model_Knight));
 
@@ -1886,6 +1899,21 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int modi
 		camera.CycleCamera("Right");
 	}
 
+	// for animations
+	// Start and Stop the Chess Piece Animations
+	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+	{
+		if (animate == true)
+		{
+			animate = false;
+		}
+		else
+		{
+			animate = true;
+		}
+	}
+
+
 	if (key >= 0 && key < 1024)
 	{
 		if (action == GLFW_PRESS)
@@ -1916,5 +1944,81 @@ void MouseCallback(GLFWwindow* window, double xPos, double yPos)
 
 		lastX = xPos;
 		lastY = yPos;
+	}
+}
+
+GLfloat AnimateCPRotation()
+{
+	if (animate)
+	{
+		return (GLfloat)glfwGetTime() * 1.0f;
+		// Animate Chess Piece
+	}
+
+	else
+	{
+		return 0.0f;
+		// Just set rotation to 0 is original rotation
+	}
+
+}
+
+GLfloat AnimateCPSlide()
+{
+	if (animate)
+	{
+		return (GLfloat)glfwGetTime() * 1.0f;
+		// Animate Chess Piece
+	}
+
+	else
+	{
+		return 0.0f;
+		// Just set rotation to 0 is original rotation
+	}
+
+}
+glm::vec3 AnimatePosition(glm::vec3 pos)
+{
+	if (animate)
+	{
+		// Animate Chess Piece Position
+
+		return glm::vec3(pos.x, pos.y + 1, pos.z);
+
+	}
+
+	else
+
+	{
+
+		// Just set position to 0 is original rotation
+		return pos;
+	}
+}
+
+glm::vec3 AnimatePosition3(glm::vec3 pos)
+{
+	if (animate)
+	{
+		// Animate Chess Piece Position
+		if (pos.y >= 3)
+		{
+			return glm::vec3(pos.x, pos.y - 0.1f, pos.z);
+		}
+		else if (pos.y <= 0)
+		{
+			return glm::vec3(pos.x, pos.y + 0.1f, pos.z);
+		}
+
+
+	}
+
+	else
+
+	{
+
+		// Just set position to 0 is original rotation
+		return pos;
 	}
 }
