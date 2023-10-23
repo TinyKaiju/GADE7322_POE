@@ -1,11 +1,13 @@
 #version 330 core
 
-out vec4 FragColor;
-
+in vec2 TexCoord;
 in float Height;
+
+out vec4 color;
+
+uniform sampler2D ourHM_texture;
 
 void main()
 {
-    float h = (Height + 16)/32.0f + 0.2f;    // shift and scale the height into a grayscale value
-    FragColor = vec4(h, h, h, 1.0);
+    color = texture(ourHM_texture, TexCoord);
 };

@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ChessPieces">
+      <UniqueIdentifier>{e41dfd63-195d-406e-8afd-bebe1772e437}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,6 +27,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -46,5 +52,30 @@
     <None Include="CoreCB.vs">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GADEChessboard.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\3D models\OBJ Files\pawn.txt">
+      <Filter>ChessPieces</Filter>
+    </Text>
+    <Text Include="res\3D models\OBJ Files\king.txt">
+      <Filter>ChessPieces</Filter>
+    </Text>
+    <Text Include="res\3D models\OBJ Files\queen.txt">
+      <Filter>ChessPieces</Filter>
+    </Text>
+    <Text Include="res\3D models\OBJ Files\knight.txt">
+      <Filter>ChessPieces</Filter>
+    </Text>
+    <Text Include="res\3D models\OBJ Files\bishop.txt">
+      <Filter>ChessPieces</Filter>
+    </Text>
+    <Text Include="res\3D models\OBJ Files\rook.txt">
+      <Filter>ChessPieces</Filter>
+    </Text>
   </ItemGroup>
 </Project>
