@@ -385,7 +385,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* whiteBlock = SOIL_load_image("res/images/white.jpg", &widthB, &heightB, 0, SOIL_LOAD_RGBA);
+	unsigned char* whiteBlock = SOIL_load_image("res/images/Light square.JPG", &widthB, &heightB, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthB, heightB, 0, GL_RGBA, GL_UNSIGNED_BYTE, whiteBlock);
@@ -411,7 +411,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	//Load texture
-	unsigned char* blackBlock = SOIL_load_image("res/images/black.jpg", &widthB, &heightB, 0, SOIL_LOAD_RGBA);
+	unsigned char* blackBlock = SOIL_load_image("res/images/Dark Square 2.JPG", &widthB, &heightB, 0, SOIL_LOAD_RGBA);
 
 	//Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthB, heightB, 0, GL_RGBA, GL_UNSIGNED_BYTE, blackBlock);
@@ -562,7 +562,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* pawnImageW = SOIL_load_image("res/images/Light square.JPG", &widthPawn, &heightPawn, 0, SOIL_LOAD_RGBA);
+	unsigned char* pawnImageW = SOIL_load_image("res/images/Light square.png", &widthPawn, &heightPawn, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthPawn, heightPawn, 0, GL_RGBA, GL_UNSIGNED_BYTE, pawnImageW);
@@ -589,7 +589,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* pawnImageB = SOIL_load_image("res/images/Dark square 2.JPG", &widthPawn, &heightPawn, 0, SOIL_LOAD_RGBA);
+	unsigned char* pawnImageB = SOIL_load_image("res/images/Dark square 2.png", &widthPawn, &heightPawn, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthPawn, heightPawn, 0, GL_RGBA, GL_UNSIGNED_BYTE, pawnImageB);
@@ -705,7 +705,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* rookImageW = SOIL_load_image("res/images/Light square.JPG", &widthRook, &heightRook, 0, SOIL_LOAD_RGBA);
+	unsigned char* rookImageW = SOIL_load_image("res/images/Light square.png", &widthRook, &heightRook, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthRook, heightRook, 0, GL_RGBA, GL_UNSIGNED_BYTE, rookImageW);
@@ -732,7 +732,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* rookImageB = SOIL_load_image("res/images/Dark square 2.JPG", &widthRook, &heightRook, 0, SOIL_LOAD_RGBA);
+	unsigned char* rookImageB = SOIL_load_image("res/images/Dark square 2.png", &widthRook, &heightRook, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthRook, heightRook, 0, GL_RGBA, GL_UNSIGNED_BYTE, rookImageB);
@@ -845,7 +845,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* bishopImageW = SOIL_load_image("res/images/Light square.JPG", &widthBishop, &heightBishop, 0, SOIL_LOAD_RGBA);
+	unsigned char* bishopImageW = SOIL_load_image("res/images/Light square.png", &widthBishop, &heightBishop, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthBishop, heightBishop, 0, GL_RGBA, GL_UNSIGNED_BYTE, bishopImageW);
@@ -872,7 +872,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* bishopImageB = SOIL_load_image("res/images/Dark square 2.JPG", &widthBishop, &heightBishop, 0, SOIL_LOAD_RGBA);
+	unsigned char* bishopImageB = SOIL_load_image("res/images/Dark square 2.png", &widthBishop, &heightBishop, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthBishop, heightBishop, 0, GL_RGBA, GL_UNSIGNED_BYTE, bishopImageB);
@@ -988,7 +988,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* knightImageW = SOIL_load_image("res/images/Light square.JPG", &widthKnight, &heightKnight, 0, SOIL_LOAD_RGBA);
+	unsigned char* knightImageW = SOIL_load_image("res/images/Light square.png", &widthKnight, &heightKnight, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthKnight, heightKnight, 0, GL_RGBA, GL_UNSIGNED_BYTE, knightImageW);
@@ -1015,7 +1015,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* knightImageB = SOIL_load_image("res/images/Dark square 2.JPG", &widthKnight, &heightKnight, 0, SOIL_LOAD_RGBA);
+	unsigned char* knightImageB = SOIL_load_image("res/images/Dark square 2.png", &widthKnight, &heightKnight, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthKnight, heightKnight, 0, GL_RGBA, GL_UNSIGNED_BYTE, knightImageB);
@@ -1123,7 +1123,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* queenImageW = SOIL_load_image("res/images/Light square.JPG", &widthQueen, &heightQueen, 0, SOIL_LOAD_RGBA);
+	unsigned char* queenImageW = SOIL_load_image("res/images/Light square.png", &widthQueen, &heightQueen, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthQueen, heightQueen, 0, GL_RGBA, GL_UNSIGNED_BYTE, queenImageW);
@@ -1150,7 +1150,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* queenImageB = SOIL_load_image("res/images/Dark square 2.JPG", &widthQueen, &heightQueen, 0, SOIL_LOAD_RGBA);
+	unsigned char* queenImageB = SOIL_load_image("res/images/Dark square 2.png", &widthQueen, &heightQueen, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthQueen, heightQueen, 0, GL_RGBA, GL_UNSIGNED_BYTE, queenImageB);
@@ -1264,7 +1264,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* kingImageW = SOIL_load_image("res/images/Light square.JPG", &widthKing, &heightKing, 0, SOIL_LOAD_RGBA);
+	unsigned char* kingImageW = SOIL_load_image("res/images/Light square.png", &widthKing, &heightKing, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthKing, heightKing, 0, GL_RGBA, GL_UNSIGNED_BYTE, kingImageW);
@@ -1291,7 +1291,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Actual texture loading code
-	unsigned char* kingImageB = SOIL_load_image("res/images/Dark square 2.JPG", &widthKing, &heightKing, 0, SOIL_LOAD_RGBA);
+	unsigned char* kingImageB = SOIL_load_image("res/images/Dark square 2.png", &widthKing, &heightKing, 0, SOIL_LOAD_RGBA);
 
 	// Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthKing, heightKing, 0, GL_RGBA, GL_UNSIGNED_BYTE, kingImageB);
