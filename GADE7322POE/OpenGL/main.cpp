@@ -422,7 +422,7 @@ int main()
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 #pragma endregion
-#pragma region Grey Texture
+#pragma region Border Texture
 
 	//Create Black texture
 	glGenTextures(1, &textureGrey);
@@ -437,7 +437,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	//Load texture
-	unsigned char* greyBlock = SOIL_load_image("res/images/grey.png", &widthB, &heightB, 0, SOIL_LOAD_RGBA);
+	unsigned char* greyBlock = SOIL_load_image("res/images/Paper.png", &widthB, &heightB, 0, SOIL_LOAD_RGBA);
 
 	//Specify 2D texture image
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthB, heightB, 0, GL_RGBA, GL_UNSIGNED_BYTE, greyBlock);
