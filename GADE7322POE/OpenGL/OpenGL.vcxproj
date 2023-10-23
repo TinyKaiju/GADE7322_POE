@@ -150,7 +150,8 @@
     <ResourceCompile Include="GADEChessboard.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="pawn.txt" />
+    <Text Include="res\3D models\OBJ Files\pawn.txt" />
+    <Text Include="res\3D models\OBJ Files\pawn2.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

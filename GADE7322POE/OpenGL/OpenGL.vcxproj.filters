@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ChessPieces">
+      <UniqueIdentifier>{e41dfd63-195d-406e-8afd-bebe1772e437}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -56,8 +59,11 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="pawn.txt">
-      <Filter>Resource Files</Filter>
+    <Text Include="res\3D models\OBJ Files\pawn.txt">
+      <Filter>ChessPieces</Filter>
+    </Text>
+    <Text Include="res\3D models\OBJ Files\pawn2.txt">
+      <Filter>ChessPieces</Filter>
     </Text>
   </ItemGroup>
 </Project>

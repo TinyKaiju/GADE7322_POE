@@ -460,10 +460,11 @@ int main()
 	Shader ourShaderPawn("CoreCB.vs", "CoreCB.frag");
 
 	// Vertex data for our pawn piece
-	GLfloat verticesPawn[17676];
+	GLfloat verticesPawn[24264];
 
 	// Read Vertex data from pawn.txt file //
-	ifstream myFile("pawn.txt");
+
+	ifstream myFile("res/3D models/OBJ Files/pawn2.txt");
 	i = 0;
 
 	if (myFile.is_open())
@@ -609,17 +610,17 @@ int main()
 
 
 #pragma endregion
-
+/*
 #pragma region Rook
 
 	//Build & Compile Shader Program for Pawn Pieces
 	Shader ourShaderRook("CoreCB.vs", "CoreCB.frag");
 
 	// Vertex data for our pawn piece
-	GLfloat verticesRook[17676];
+	GLfloat verticesRook[8088*3];
 
 	// Read Vertex data from pawn.txt file //
-	ifstream myFile2("pawn.txt");
+	ifstream myFile2("rook piece.txt");
 	i = 0;
 
 	if (myFile2.is_open())
@@ -1315,8 +1316,7 @@ int main()
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 #pragma endregion
-
-
+*/
 
 #pragma endregion
 
@@ -1377,14 +1377,14 @@ int main()
 				{
 					// Activate White texture
 					glActiveTexture(GL_TEXTURE0);
-					glBindTexture(GL_TEXTURE_2D, textureWhite);
+					glBindTexture(GL_TEXTURE_2D, textureBlack);
 					glUniform1i(glGetUniformLocation(chessboardShader.Program, "faceTexture"), 0);
 				}
 				else
 				{
 					// Activate Black texture
 					glActiveTexture(GL_TEXTURE0);
-					glBindTexture(GL_TEXTURE_2D, textureBlack);
+					glBindTexture(GL_TEXTURE_2D, textureWhite);
 					glUniform1i(glGetUniformLocation(chessboardShader.Program, "faceTexture"), 0);
 				}
 
@@ -1517,11 +1517,11 @@ int main()
 
 			glUniformMatrix4fv(modelLoc_Pawn, 1, GL_FALSE, glm::value_ptr(model_Pawn));
 
-			glDrawArrays(GL_TRIANGLES, 0, 5892); //number of lines times by 2
+			glDrawArrays(GL_TRIANGLES, 0, 8088); //number of lines times by 2
 
 		}
 #pragma endregion
-
+/*
 #pragma region Draw Rook
 
 		// Activate Shader
@@ -1572,7 +1572,7 @@ int main()
 
 			glUniformMatrix4fv(modelLoc_Rook, 1, GL_FALSE, glm::value_ptr(model_Rook));
 
-			glDrawArrays(GL_TRIANGLES, 0, 5892); //number of lines times by 2
+			glDrawArrays(GL_TRIANGLES, 0, 8088); //number of lines times by 2
 
 		}
 #pragma endregion
@@ -1800,6 +1800,7 @@ int main()
 
 		}
 #pragma endregion
+*/
 #pragma endregion
 		//Terrain Generation
 #pragma region Height Map
