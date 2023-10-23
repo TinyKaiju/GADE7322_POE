@@ -172,12 +172,44 @@ int main()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
+	// Texture coordinate attribute For Height Map Texture
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat))); //Texture
+	glEnableVertexAttribArray(2);
+
 	glGenBuffers(1, &IBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesHM.size() * sizeof(unsigned), &indicesHM[0], GL_STATIC_DRAW);
 
 #pragma endregion
 
+#pragma region  Height Map Texture
+
+	GLuint textureHM;
+	int width_HM, height_HM;
+
+	glGenTextures(1, &textureHM);
+	glBindTexture(GL_TEXTURE_2D, textureHM);
+
+	// Set texture parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	// Set texture filtering
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// Actual texture loading code
+	unsigned char* HM_Image = SOIL_load_image("res/images/Paper texture.jpg", &width_HM, &height_HM, 0, SOIL_LOAD_RGBA);
+
+	// Specify 2D texture image
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width_HM, height_HM, 0, GL_RGBA, GL_UNSIGNED_BYTE, HM_Image);
+
+	// Generate mipmaps
+	glGenerateMipmap(GL_TEXTURE_2D);
+	SOIL_free_image_data(HM_Image);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+#pragma endregion
 
 #pragma region BUILD AND COMPILE SHADER - CHESSBOARD
 
@@ -582,10 +614,17 @@ int main()
 
 		for (int strip = 0; strip < numStrips; strip++)
 		{
-			glDrawElements(GL_TRIANGLE_STRIP, // primitive type
-				numTrisPerStrip + 2, // number of indices to render
-				GL_UNSIGNED_INT, // index data type
-				(void*)(sizeof(GLuint) * (numTrisPerStrip + 2) * strip)); // offset to starting index
+
+			//For Height Map Texture
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, textureHM);
+			glUniform1i(glGetUniformLocation(shaderHM.Program, "ourTexture1"), 0);
+			//For Height Map Texture
+
+			glDrawElements(GL_TRIANGLE_STRIP,
+				numTrisPerStrip + 2,
+				GL_UNSIGNED_INT,
+				(void*)(sizeof(GLuint) * (numTrisPerStrip + 2) * strip));
 		}
 
 		glBindVertexArray(0); // Unbinding
