@@ -894,12 +894,12 @@ int main()
 #pragma endregion
 
 #pragma region Knight
-/*
+
 	//Build & Compile Shader Program for Pawn Pieces
 	Shader ourShaderKnight("coreCB.vs", "coreCB.frag");
 
 	// Vertex data for our pawn piece
-	GLfloat verticesKnight[133092];
+	GLfloat verticesKnight[60777];
 
 	// Read Vertex data from pawn.txt file //
 	ifstream myFile4("res/3D models/OBJ Files/knight.txt");
@@ -1027,8 +1027,6 @@ int main()
 
 #pragma endregion
 
-
-*/
 #pragma endregion
 
 
@@ -1630,7 +1628,7 @@ int main()
 #pragma endregion
 
 #pragma region Draw Knight
-		/*
+		
 		// Activate Shader
 		ourShaderKnight.Use();
 
@@ -1680,11 +1678,11 @@ int main()
 
 			glUniformMatrix4fv(modelLoc_Knight, 1, GL_FALSE, glm::value_ptr(model_Knight));
 
-			glDrawArrays(GL_TRIANGLES, 0, 44364); //number of lines times by 2
+			glDrawArrays(GL_TRIANGLES, 0, 20259); //number of lines times by 2
 
 		}
 #pragma endregion
-*/
+
 #pragma region Draw Queen
 
 		// Activate Shader
