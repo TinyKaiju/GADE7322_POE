@@ -80,7 +80,7 @@ int main()
 	// Set the required callback functions
 	glfwSetKeyCallback(window, KeyCallback);
 	glfwSetCursorPosCallback(window, MouseCallback);
-
+	GLuint CreateSkyboxTexture(GLuint texture, vector<std::string> faces, int width, int height);
 
 	// Center  and Hide cursor
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -216,40 +216,9 @@ int main()
 #pragma endregion
 
 
-#pragma region SkyBox Texture
-	GLuint texture;
-	GLuint CreateSkyboxTexture(GLuint texture, vector<std::string> faces, int width, int height); // Method for Skybox Texture
-	int widthTexture = 0, heightTexture = 0;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
-
-	int nrChannels;
-	for (unsigned int i = 0; i < skyboxFaces.size(); i++)
-	{
-		unsigned char* textureImg = SOIL_load_image(skyboxFaces[i].c_str(), &SCREEN_WIDTH, &SCREEN_HEIGHT, &nrChannels, 0);
-		if (textureImg)
-		{
-			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, SCREEN_WIDTH, SCREEN_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureImg);
-			SOIL_free_image_data(textureImg);
-		}
-		else
-		{
-			std::cout << "Cubemap texture failed to load at path: " << skyboxFaces[i] << std::endl;
-			SOIL_free_image_data(textureImg);
-		}
-	}
-
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-	return texture;
-#pragma endregion
 #pragma region SkyBox Shader
 	Shader skyboxShader("Skybox.vs", "SkyBox.frag");
+	
 	float skyboxVertices[] = {
 		// positions
 		-1.0f,  1.0f, -1.0f,
@@ -312,17 +281,21 @@ int main()
 	// Load textures
 	vector<std::string> skyboxFaces
 	{
-		"res/images/Skybox/Skybox_Right.png",
-		"res/images/Skybox/Skybox_Left.png",
-		"res/images/Skybox/Skybox_Top.png",
-		"res/images/Skybox/Skybox_Bottom.png",
-		"res/images/Skybox/Skybox_Front.png",
-		"res/images/Skybox/Skybox_Back.png"
+		"res/images/Skyboxs/Pink/px.png",
+		"res/images/Skyboxs/Pink/nx.png",
+		"res/images/Skyboxs/Pink/py.png",
+		"res/images/Skyboxs/Pink/ny.png",
+		"res/images/Skyboxs/Pink/pz.png",
+		"res/images/Skyboxs/Pink/nz.png"
 	};
 
 
 	// Skybox texture variable
 	GLuint skyboxTexture = 0;
+
+	int widthTexture = 256;
+	int heightTexture = 256;
+
 	skyboxTexture = CreateSkyboxTexture(skyboxTexture, skyboxFaces, widthTexture, heightTexture);
 
 #pragma endregion 
@@ -2166,4 +2139,36 @@ glm::vec3 AnimatePosition3(glm::vec3 pos)
 		// Just set position to 0 is original rotation
 		return pos;
 	}
+}
+
+GLuint CreateSkyboxTexture(GLuint texture, vector<std::string> faces, int width, int height) // Method for Skybox Texture
+{
+	int widthTexture = 0, heightTexture = 0;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+
+	int nrChannels;
+	for (unsigned int i = 0; i < faces.size(); i++)
+	{
+		unsigned char* textureImg = SOIL_load_image(faces[i].c_str(), &width, &height, &nrChannels, 0);
+		if (textureImg)
+		{
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureImg);
+			SOIL_free_image_data(textureImg);
+		}
+		else
+		{
+			std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
+			SOIL_free_image_data(textureImg);
+		}
+	}
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	return texture;
 }
