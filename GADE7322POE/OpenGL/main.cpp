@@ -31,6 +31,8 @@ int SCREEN_WIDTH, SCREEN_HEIGHT; // Replace all screenW & screenH with these
 // Function declaration
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void MouseCallback(GLFWwindow* window, double xPos, double yPos); // Get mouse pos in order to hide it
+void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
+void ProcessInput(GLFWwindow* window);
 
 // Initialise camera values
 Camera camera(glm::vec3(0.0f, 2.0f, 12.0f));
@@ -293,8 +295,8 @@ int main()
 	// Skybox texture variable
 	GLuint skyboxTexture = 0;
 
-	int widthTexture = 256;
-	int heightTexture = 256;
+	int widthTexture = 1024;
+	int heightTexture = 1024;
 
 	skyboxTexture = CreateSkyboxTexture(skyboxTexture, skyboxFaces, widthTexture, heightTexture);
 
@@ -2061,6 +2063,38 @@ void MouseCallback(GLFWwindow* window, double xPos, double yPos)
 
 		lastX = xPos;
 		lastY = yPos;
+	}
+}
+
+// GLFW: whenever the mouse scroll wheel scrolls, this callback is called
+void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
+{
+	camera.ProcessMouseScroll(yOffset);
+}
+
+// Moves/alters the camera positions based on user input
+// WASD and Arrow keys
+void ProcessInput(GLFWwindow* window)
+{
+	// Camera controls
+	if (keys[GLFW_KEY_W])
+	{
+		camera.ProcessKeyboard(FORWARD, deltaTime);
+	}
+
+	if (keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN])
+	{
+		camera.ProcessKeyboard(BACKWARD, deltaTime);
+	}
+
+	if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT])
+	{
+		camera.ProcessKeyboard(LEFT, deltaTime);
+	}
+
+	if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT])
+	{
+		camera.ProcessKeyboard(RIGHT, deltaTime);
 	}
 }
 

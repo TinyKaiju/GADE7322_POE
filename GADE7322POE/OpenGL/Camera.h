@@ -133,6 +133,50 @@ public:
         }
     }
 
+    // Process Mouse input in x and y directions
+    void ProcessMouseMovement(GLfloat xOffset, GLfloat yOffset, GLboolean constrainPitch = true)
+    {
+        xOffset = this->mouseSensitivity;
+        yOffset = this->mouseSensitivity;
+
+        this->yaw += xOffset;
+        this->pitch += yOffset;
+
+        // Make sure that when pitch is out of bounds, screen doesn't get flipped
+        if (constrainPitch)
+        {
+            if (this->pitch > 89.0f)
+            {
+                this->pitch = 89.0f;
+            }
+
+            if (this->pitch < -89.0f)
+            {
+                this->pitch = -89.0f;
+            }
+        }
+    // Update front, right and up vectors using the updated Euler angles
+    this->updateCameraVectors();
+    }
+    // Process mouse scroll for zooming
+    void ProcessMouseScroll(GLfloat yOffset)
+    {
+        if (this->zoom >= 1.0f && this->zoom <= 45.0f)
+        {
+            this->zoom -= yOffset;
+        }
+
+        if (this->zoom <= 1.0f)
+        {
+            this->zoom = 1.0f;;
+        }
+
+        if (this->zoom >= 45.0f)
+        {
+            this->zoom = 45.0f;;
+        }
+    }
+
     // Getter for Zoom variable
     GLfloat GetZoom()
     {
