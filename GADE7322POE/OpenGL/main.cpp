@@ -82,6 +82,7 @@ int main()
 	// Set the required callback functions
 	glfwSetKeyCallback(window, KeyCallback);
 	glfwSetCursorPosCallback(window, MouseCallback);
+	glfwSetScrollCallback(window, ScrollCallback);
 	GLuint CreateSkyboxTexture(GLuint texture, vector<std::string> faces, int width, int height);
 
 	// Center  and Hide cursor
@@ -219,6 +220,7 @@ int main()
 
 
 #pragma region SkyBox Shader
+
 	Shader skyboxShader("Skybox.vs", "SkyBox.frag");
 	
 	float skyboxVertices[] = {
@@ -2063,7 +2065,10 @@ void MouseCallback(GLFWwindow* window, double xPos, double yPos)
 
 		lastX = xPos;
 		lastY = yPos;
+		
+		camera.ProcessMouseMovement(xOffset, yOffset);
 	}
+
 }
 
 // GLFW: whenever the mouse scroll wheel scrolls, this callback is called
@@ -2077,7 +2082,7 @@ void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 void ProcessInput(GLFWwindow* window)
 {
 	// Camera controls
-	if (keys[GLFW_KEY_W])
+	if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP])
 	{
 		camera.ProcessKeyboard(FORWARD, deltaTime);
 	}
@@ -2096,6 +2101,7 @@ void ProcessInput(GLFWwindow* window)
 	{
 		camera.ProcessKeyboard(RIGHT, deltaTime);
 	}
+	
 }
 
 GLfloat AnimateCPRotation()

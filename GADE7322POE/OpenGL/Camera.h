@@ -131,13 +131,14 @@ public:
         {
             this->position += this->right * velocity;
         }
+
     }
 
     // Process Mouse input in x and y directions
     void ProcessMouseMovement(GLfloat xOffset, GLfloat yOffset, GLboolean constrainPitch = true)
     {
-        xOffset = this->mouseSensitivity;
-        yOffset = this->mouseSensitivity;
+        xOffset *= this->mouseSensitivity;
+        yOffset *= this->mouseSensitivity;
 
         this->yaw += xOffset;
         this->pitch += yOffset;
