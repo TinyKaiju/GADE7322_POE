@@ -52,6 +52,12 @@
     <None Include="CoreCB.vs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="SkyBox.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="SkyBox.vs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GADEChessboard.rc">

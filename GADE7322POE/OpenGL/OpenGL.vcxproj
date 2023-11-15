@@ -145,6 +145,8 @@
     <None Include="CoreCB.vs" />
     <None Include="CoreHM.frag" />
     <None Include="CoreHM.vs" />
+    <None Include="SkyBox.frag" />
+    <None Include="SkyBox.vs" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GADEChessboard.rc" />

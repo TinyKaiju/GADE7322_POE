@@ -311,6 +311,7 @@ int main()
 		-0.25f,  0.5f,  0.25f,    0.0f, 0.0f,
 		-0.25f,  0.5f, -0.25f,    0.0f, 1.0f // Top
 	};
+
 	// Positions of different cubes
 	glm::vec3 cubePositions[] =
 	{
@@ -372,7 +373,7 @@ int main()
 	// Chessboard texture variables
 	GLuint textureWhite, textureBlack, textureGrey;
 	int widthB, heightB;
-#pragma endregion
+
 
 #pragma region White Texture
 
@@ -426,6 +427,7 @@ int main()
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 #pragma endregion
+
 #pragma region Border Texture
 
 	//Create Black texture
@@ -450,6 +452,8 @@ int main()
 	glGenerateMipmap(GL_TEXTURE_2D);
 	SOIL_free_image_data(greyBlock);
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+#pragma endregion
 
 #pragma endregion
 
@@ -1034,6 +1038,13 @@ int main()
 #pragma endregion
 
 
+
+
+
+
+
+#pragma endregion
+
 #pragma region Queen
 
 	//Build & Compile Shader Program for Pawn Pieces
@@ -1306,12 +1317,6 @@ int main()
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 #pragma endregion
-
-
-#pragma endregion
-
-
-
 
 
 #pragma endregion
@@ -1977,6 +1982,7 @@ GLfloat AnimateCPSlide()
 	}
 
 }
+
 glm::vec3 AnimatePosition(glm::vec3 pos)
 {
 	if (animate)
