@@ -49,6 +49,7 @@ bool animate = false;
 
 GLfloat AnimateCPRotation();
 glm::vec3 AnimatePosition(glm::vec3 pos);
+glm::vec3 LightPos();
 
 int main()
 {
@@ -303,6 +304,11 @@ int main()
 	skyboxTexture = CreateSkyboxTexture(skyboxTexture, skyboxFaces, widthTexture, heightTexture);
 
 #pragma endregion 
+
+#pragma Light shader
+	Shader LightingShader("Lighting.vs", "Lighting.frag");
+	Shader LampShader("Lamp.vs", "Lamp.frag");
+#pragma endregion
 
 
 #pragma region BUILD AND COMPILE SHADER - CHESSBOARD
