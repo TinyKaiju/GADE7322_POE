@@ -1308,145 +1308,145 @@ int main()
 //#pragma endregion
 	glDeleteBuffers(1, &VBO);
 
-//#pragma region King
-//	//Build & Compile Shader Program for Pawn Pieces
-//	Shader ourShaderKing("coreCB.vs", "coreCB.frag");
-//
-//	// Vertex data for our king piece
-//	GLfloat verticesKing[22860];
-//
-//	// Read Vertex data from pawn.txt file //
-//	ifstream myFile6("res/3D models/OBJ Files/King.txt");
-//	i = 0;
-//
-//	if (myFile6.is_open())
-//	{
-//		string line;
-//
-//		while (!myFile6.eof())
-//		{
-//			getline(myFile6, line, ' ');
-//			//cout << "Val 1: " << line << endl;
-//			verticesKing[i] = stof(line);
-//			i++;
-//			getline(myFile6, line, ' ');
-//			//cout << "Val 2: " << line << endl;
-//			verticesKing[i] = stof(line);
-//			i++;
-//			getline(myFile6, line, '\n');
-//			//cout << "Val 3: " << line << endl;
-//			verticesKing[i] = stof(line);
-//			i++;
-//		}
-//		myFile6.close();
-//	}
-//	else
-//	{
-//		cout << "Can't open the file";
-//	}
-//	// Read Vertex data from pawn.txt file //
-//
-//	// Positions of pawns
-//	glm::vec3 KingPositions[] =
-//	{
-//		// Row 1
-//		glm::vec3(1.0f, 0.5f, 4.0f),
-//
-//		// Row 2
-//		glm::vec3(1.0f, 0.5f, -3.0f),
-//	};
-//
-//	// Generate the vertex arrays and vertex buffers and save them into variables
-//	GLuint VBA_King, VOA_King;
-//	glGenVertexArrays(1, &VOA_King);
-//	glGenBuffers(1, &VBA_King);
-//
-//	// Bind the vertex array object
-//	glBindVertexArray(VOA_King);
-//
-//	// Bind and set the vertex buffers
-//	glBindBuffer(GL_ARRAY_BUFFER, VBA_King);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesKing), verticesKing, GL_STATIC_DRAW);
-//
-//	// Create the vertex pointer and enable the vertex array
-//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (GLvoid*)0); //Position
-//	glEnableVertexAttribArray(0);
-//
-//	// Texture coordinate attribute
-//	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0); //Texture
-//	glEnableVertexAttribArray(2);
-//
-//	// Unbind the vertex array to prevent strange bugs
-//	glBindVertexArray(0);
-//
-//#pragma region King Textures
-//
-//	//Chess Piece Pawn texture variables
-//	GLuint KingtextureW, KingTextureB;
-//	int widthKing, heightKing;
-//
-//#pragma region Light Texture
-//
-//	// Create and load White texture
-//	glGenTextures(1, &KingtextureW);
-//	glBindTexture(GL_TEXTURE_2D, KingtextureW);
-//
-//	// Set texture parameters
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//
-//	// Set texture filtering
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//
-//	// Actual texture loading code
-//	unsigned char* KingImageW = SOIL_load_image("res/images/Light square.png", &widthKing, &heightKing, 0, SOIL_LOAD_RGBA);
-//
-//	// Specify 2D texture image
-//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthKing, heightKing, 0, GL_RGBA, GL_UNSIGNED_BYTE, KingImageW);
-//
-//	// Generate mipmaps
-//	glGenerateMipmap(GL_TEXTURE_2D);
-//	SOIL_free_image_data(KingImageW);
-//	glBindTexture(GL_TEXTURE_2D, 0);
-//
-//#pragma endregion
-//
-//#pragma region Dark Texture 
-//
-//	// Create and load Black texture
-//	glGenTextures(1, &KingTextureB);
-//	glBindTexture(GL_TEXTURE_2D, KingTextureB);
-//
-//	// Set texture parameters 
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//
-//	// Set texture filtering
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//
-//	// Actual texture loading code
-//	unsigned char* KingImageB = SOIL_load_image("res/images/Dark square 2.png", &widthKing, &heightKing, 0, SOIL_LOAD_RGBA);
-//
-//	// Specify 2D texture image
-//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthKing, heightKing, 0, GL_RGBA, GL_UNSIGNED_BYTE, KingImageB);
-//
-//	// Generate mipmaps
-//	glGenerateMipmap(GL_TEXTURE_2D);
-//	SOIL_free_image_data(KingImageB);
-//	glBindTexture(GL_TEXTURE_2D, 0);
-//
-//#pragma endregion
-//
-//
-//#pragma endregion
-//
-//
-//
-//
-//
-//#pragma endregion
+#pragma region King
+	//Build & Compile Shader Program for Pawn Pieces
+	Shader ourShaderKing("coreCB.vs", "coreCB.frag");
+
+	// Vertex data for our king piece
+	GLfloat verticesKing[22860];
+
+	// Read Vertex data from pawn.txt file //
+	ifstream myFile6("res/3D models/OBJ Files/King.txt");
+	i = 0;
+
+	if (myFile6.is_open())
+	{
+		string line;
+
+		while (!myFile6.eof())
+		{
+			getline(myFile6, line, ' ');
+			//cout << "Val 1: " << line << endl;
+			verticesKing[i] = stof(line);
+			i++;
+			getline(myFile6, line, ' ');
+			//cout << "Val 2: " << line << endl;
+			verticesKing[i] = stof(line);
+			i++;
+			getline(myFile6, line, '\n');
+			//cout << "Val 3: " << line << endl;
+			verticesKing[i] = stof(line);
+			i++;
+		}
+		myFile6.close();
+	}
+	else
+	{
+		cout << "Can't open the file";
+	}
+	// Read Vertex data from pawn.txt file //
+
+	// Positions of pawns
+	glm::vec3 KingPositions[] =
+	{
+		// Row 1
+		glm::vec3(1.0f, 0.5f, 4.0f),
+
+		// Row 2
+		glm::vec3(1.0f, 0.5f, -3.0f),
+	};
+
+	// Generate the vertex arrays and vertex buffers and save them into variables
+	GLuint VBA_King, VOA_King;
+	glGenVertexArrays(1, &VOA_King);
+	glGenBuffers(1, &VBA_King);
+
+	// Bind the vertex array object
+	glBindVertexArray(VOA_King);
+
+	// Bind and set the vertex buffers
+	glBindBuffer(GL_ARRAY_BUFFER, VBA_King);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesKing), verticesKing, GL_STATIC_DRAW);
+
+	// Create the vertex pointer and enable the vertex array
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (GLvoid*)0); //Position
+	glEnableVertexAttribArray(0);
+
+	// Texture coordinate attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0); //Texture
+	glEnableVertexAttribArray(2);
+
+	// Unbind the vertex array to prevent strange bugs
+	glBindVertexArray(0);
+
+#pragma region King Textures
+
+	//Chess Piece Pawn texture variables
+	GLuint KingtextureW, KingTextureB;
+	int widthKing, heightKing;
+
+#pragma region Light Texture
+
+	// Create and load White texture
+	glGenTextures(1, &KingtextureW);
+	glBindTexture(GL_TEXTURE_2D, KingtextureW);
+
+	// Set texture parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	// Set texture filtering
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// Actual texture loading code
+	unsigned char* KingImageW = SOIL_load_image("res/images/Light square.png", &widthKing, &heightKing, 0, SOIL_LOAD_RGBA);
+
+	// Specify 2D texture image
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthKing, heightKing, 0, GL_RGBA, GL_UNSIGNED_BYTE, KingImageW);
+
+	// Generate mipmaps
+	glGenerateMipmap(GL_TEXTURE_2D);
+	SOIL_free_image_data(KingImageW);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+#pragma endregion
+
+#pragma region Dark Texture 
+
+	// Create and load Black texture
+	glGenTextures(1, &KingTextureB);
+	glBindTexture(GL_TEXTURE_2D, KingTextureB);
+
+	// Set texture parameters 
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	// Set texture filtering
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// Actual texture loading code
+	unsigned char* KingImageB = SOIL_load_image("res/images/Dark square 2.png", &widthKing, &heightKing, 0, SOIL_LOAD_RGBA);
+
+	// Specify 2D texture image
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthKing, heightKing, 0, GL_RGBA, GL_UNSIGNED_BYTE, KingImageB);
+
+	// Generate mipmaps
+	glGenerateMipmap(GL_TEXTURE_2D);
+	SOIL_free_image_data(KingImageB);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+#pragma endregion
+
+
+#pragma endregion
+
+
+
+
+
+#pragma endregion
 	glDeleteBuffers(1, &VBO);
 
 #pragma endregion
@@ -1639,10 +1639,10 @@ int main()
 	glm::vec3 SkullPositions[] =
 	{
 		// Row 1
-		glm::vec3(8.0f, 0.5f, 4.0f),
+		glm::vec3(4.5f, 0.2f, 5.0f),
 
 		// Row 2
-		glm::vec3(8.0f, 0.5f, -3.0f)
+		glm::vec3(4.5f, 0.2f, -4.0f)
 	};
 
 	// Generate the vertex arrays and vertex buffers and save them into variables
@@ -1737,145 +1737,145 @@ int main()
 
 #pragma endregion
 
-//#pragma region Chest
-//	//Build & Compile Shader Program for Pawn Pieces
-//	Shader ourShaderChest("coreCB.vs", "coreCB.frag");
-//
-//	// Vertex data for our Chest piece
-//	GLfloat verticesChest[20916]{};
-//
-//	// Read Vertex data from Chest.txt file //
-//	ifstream myFile11("res/3D models/OBJ Files/Chest.txt");
-//	i = 0;
-//
-//	if (myFile11.is_open())
-//	{
-//		string line;
-//
-//		while (!myFile11.eof())
-//		{
-//			getline(myFile11, line, ' ');
-//			//cout << "Val 1: " << line << endl;
-//			verticesChest[i] = stof(line);
-//			i++;
-//			getline(myFile11, line, ' ');
-//			//cout << "Val 2: " << line << endl;
-//			verticesChest[i] = stof(line);
-//			i++;
-//			getline(myFile11, line, '\n');
-//			//cout << "Val 3: " << line << endl;
-//			verticesChest[i] = stof(line);
-//			i++;
-//		}
-//		myFile11.close();
-//	}
-//	else
-//	{
-//		cout << "Can't open the file";
-//	}
-//	// Read Vertex data from pawn.txt file //
-//
-//	// Positions of pawns
-//	glm::vec3 ChestPositions[] =
-//	{
-//		// Row 1
-//		glm::vec3(8.0f, 0.5f, 4.0f),
-//
-//		// Row 2
-//		glm::vec3(8.0f, 0.5f, -3.0f)
-//	};
-//
-//	// Generate the vertex arrays and vertex buffers and save them into variables
-//	GLuint VBA_Chest, VOA_Chest;
-//	glGenVertexArrays(1, &VOA_Chest);
-//	glGenBuffers(1, &VBA_Chest);
-//
-//	// Bind the vertex array object
-//	glBindVertexArray(VOA_Chest);
-//
-//	// Bind and set the vertex buffers
-//	glBindBuffer(GL_ARRAY_BUFFER, VBA_Chest);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesChest), verticesChest, GL_STATIC_DRAW);
-//
-//	// Create the vertex pointer and enable the vertex array
-//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (GLvoid*)0); //Position
-//	glEnableVertexAttribArray(0);
-//
-//	// Texture coordinate attribute
-//	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0); //Texture
-//	glEnableVertexAttribArray(2);
-//
-//	// Unbind the vertex array to prevent strange bugs
-//	glBindVertexArray(0);
-//
-//#pragma region Chest Textures
-//
-//	//Chess Piece Pawn texture variables
-//	GLuint ChestTextureW, ChestTextureB;
-//	int widthChest, heightChest;
-//
-//#pragma region Light Texture
-//
-//	// Create and load White texture
-//	glGenTextures(1, &ChestTextureW);
-//	glBindTexture(GL_TEXTURE_2D, ChestTextureW);
-//
-//	// Set texture parameters
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//
-//	// Set texture filtering
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//
-//	// Actual texture loading code
-//	unsigned char* ChestImageW = SOIL_load_image("res/images/Light square.png", &widthChest, &heightChest, 0, SOIL_LOAD_RGBA);
-//
-//	// Specify 2D texture image
-//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthChest, heightChest, 0, GL_RGBA, GL_UNSIGNED_BYTE, ChestImageW);
-//
-//	// Generate mipmaps
-//	glGenerateMipmap(GL_TEXTURE_2D);
-//	SOIL_free_image_data(ChestImageW);
-//	glBindTexture(GL_TEXTURE_2D, 0);
-//
-//#pragma endregion
-//
-//#pragma region Dark Texture 
-//
-//	// Create and load Black texture
-//	glGenTextures(1, &ChestTextureB);
-//	glBindTexture(GL_TEXTURE_2D, ChestTextureB);
-//
-//	// Set texture parameters 
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//
-//	// Set texture filtering
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//
-//	// Actual texture loading code
-//	unsigned char* ChestImageB = SOIL_load_image("res/images/Dark square 2.png", &widthChest, &heightChest, 0, SOIL_LOAD_RGBA);
-//
-//	// Specify 2D texture image
-//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthChest, heightChest, 0, GL_RGBA, GL_UNSIGNED_BYTE, ChestImageB);
-//
-//	// Generate mipmaps
-//	glGenerateMipmap(GL_TEXTURE_2D);
-//	SOIL_free_image_data(ChestImageB);
-//	glBindTexture(GL_TEXTURE_2D, 0);
-//
-//#pragma endregion
-//
-//
-//#pragma endregion
-//
-//
-//
-//
-//
-//#pragma endregion
+#pragma region Chest
+	//Build & Compile Shader Program for Pawn Pieces
+	Shader ourShaderChest("coreCB.vs", "coreCB.frag");
+
+	// Vertex data for our Chest piece
+	GLfloat verticesChest[2016]{};
+
+	// Read Vertex data from Chest.txt file //
+	ifstream myFile11("res/3D models/OBJ Files/Chest.txt");
+	i = 0;
+
+	if (myFile11.is_open())
+	{
+		string line;
+
+		while (!myFile11.eof())
+		{
+			getline(myFile11, line, ' ');
+			//cout << "Val 1: " << line << endl;
+			verticesChest[i] = stof(line);
+			i++;
+			getline(myFile11, line, ' ');
+			//cout << "Val 2: " << line << endl;
+			verticesChest[i] = stof(line);
+			i++;
+			getline(myFile11, line, '\n');
+			//cout << "Val 3: " << line << endl;
+			verticesChest[i] = stof(line);
+			i++;
+		}
+		myFile11.close();
+	}
+	else
+	{
+		cout << "Can't open the file";
+	}
+	// Read Vertex data from pawn.txt file //
+
+	// Positions of pawns
+	glm::vec3 ChestPositions[] =
+	{
+		// Row 1
+		glm::vec3(0.0f, -0.5f, 5.5f),
+
+		// Row 2
+		glm::vec3(0.0f, -0.5f, -4.5f)
+	};
+
+	// Generate the vertex arrays and vertex buffers and save them into variables
+	GLuint VBA_Chest, VOA_Chest;
+	glGenVertexArrays(1, &VOA_Chest);
+	glGenBuffers(1, &VBA_Chest);
+
+	// Bind the vertex array object
+	glBindVertexArray(VOA_Chest);
+
+	// Bind and set the vertex buffers
+	glBindBuffer(GL_ARRAY_BUFFER, VBA_Chest);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesChest), verticesChest, GL_STATIC_DRAW);
+
+	// Create the vertex pointer and enable the vertex array
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (GLvoid*)0); //Position
+	glEnableVertexAttribArray(0);
+
+	// Texture coordinate attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0); //Texture
+	glEnableVertexAttribArray(2);
+
+	// Unbind the vertex array to prevent strange bugs
+	glBindVertexArray(0);
+
+#pragma region Chest Textures
+
+	//Chess Piece Pawn texture variables
+	GLuint ChestTextureW, ChestTextureB;
+	int widthChest, heightChest;
+
+#pragma region Light Texture
+
+	// Create and load White texture
+	glGenTextures(1, &ChestTextureW);
+	glBindTexture(GL_TEXTURE_2D, ChestTextureW);
+
+	// Set texture parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	// Set texture filtering
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// Actual texture loading code
+	unsigned char* ChestImageW = SOIL_load_image("res/images/Light square.png", &widthChest, &heightChest, 0, SOIL_LOAD_RGBA);
+
+	// Specify 2D texture image
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthChest, heightChest, 0, GL_RGBA, GL_UNSIGNED_BYTE, ChestImageW);
+
+	// Generate mipmaps
+	glGenerateMipmap(GL_TEXTURE_2D);
+	SOIL_free_image_data(ChestImageW);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+#pragma endregion
+
+#pragma region Dark Texture 
+
+	// Create and load Black texture
+	glGenTextures(1, &ChestTextureB);
+	glBindTexture(GL_TEXTURE_2D, ChestTextureB);
+
+	// Set texture parameters 
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	// Set texture filtering
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// Actual texture loading code
+	unsigned char* ChestImageB = SOIL_load_image("res/images/Dark square 2.png", &widthChest, &heightChest, 0, SOIL_LOAD_RGBA);
+
+	// Specify 2D texture image
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthChest, heightChest, 0, GL_RGBA, GL_UNSIGNED_BYTE, ChestImageB);
+
+	// Generate mipmaps
+	glGenerateMipmap(GL_TEXTURE_2D);
+	SOIL_free_image_data(ChestImageB);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+#pragma endregion
+
+
+#pragma endregion
+
+
+
+
+
+#pragma endregion
 #pragma endregion
 
 	//Game LOOP
@@ -2314,63 +2314,63 @@ int main()
 //#pragma endregion
 		glDeleteBuffers(1, &VBO);
 		glDeleteBuffers(1, &IBO);
-//#pragma region Draw King
-//
-//		// Activate Shader
-//		ourShaderKing.Use();
-//
-//		// Create Projection Matrix (moved into while loop in order to update zoom)
-//		glm::mat4 projection_King(1.0f);
-//		//Perspective view
-//		projection_King = glm::perspective(glm::radians(camera.GetZoom()), (float)WIDTH / (float)HEIGHT, 0.1f, 100000.0f);
-//
-//		// Create camera transformation
-//		glm::mat4 view_King(1.0f);
-//		view_King = camera.GetViewMatrix();
-//
-//		// Get the uniform locations for our matrices
-//		GLint modelLoc_King = glGetUniformLocation(ourShaderKing.Program, "model");
-//		GLint viewLoc_King = glGetUniformLocation(ourShaderKing.Program, "view");
-//		GLint projLoc_King = glGetUniformLocation(ourShaderKing.Program, "projection");
-//
-//		// Pass locations to shaders
-//		glUniformMatrix4fv(viewLoc_King, 1, GL_FALSE, glm::value_ptr(view_King));
-//		glUniformMatrix4fv(projLoc_King, 1, GL_FALSE, glm::value_ptr(projection_King));
-//
-//		// Draw container
-//		glBindVertexArray(VOA_King);
-//
-//		for (GLuint i = 0; i < 2; i++)
-//		{
-//			if (i <= 0)
-//			{
-//				// Activate White Texture
-//				glActiveTexture(GL_TEXTURE0);
-//				glBindTexture(GL_TEXTURE_2D, KingtextureW);
-//				glUniform1i(glGetUniformLocation(ourShaderKing.Program, "faceTexture"), 0);
-//			}
-//			else
-//			{
-//				// Activate Black Texture 
-//				glActiveTexture(GL_TEXTURE0);
-//				glBindTexture(GL_TEXTURE_2D, KingTextureB);
-//				glUniform1i(glGetUniformLocation(ourShaderKing.Program, "faceTexture"), 0);
-//			}
-//
-//			// Calculate the model matrix for each object and pass it to the shader before drawing
-//			glm::mat4 model_King(1.0f);
-//			model_King = glm::translate(model_King, KingPositions[i]); // Original code 
-//			GLfloat angle = 0.0f; // Original code
-//			model_King = glm::rotate(model_King, angle, glm::vec3(1.0f, 0.0f, 0.0f)); // Original code
-//
-//			glUniformMatrix4fv(modelLoc_King, 1, GL_FALSE, glm::value_ptr(model_King));
-//
-//			glDrawArrays(GL_TRIANGLES, 0, 7620); //number of lines times by 2
-//
-//		}
-//
-//		glBindVertexArray(0);
-//#pragma endregion
+#pragma region Draw King
+
+		// Activate Shader
+		ourShaderKing.Use();
+
+		// Create Projection Matrix (moved into while loop in order to update zoom)
+		glm::mat4 projection_King(1.0f);
+		//Perspective view
+		projection_King = glm::perspective(glm::radians(camera.GetZoom()), (float)WIDTH / (float)HEIGHT, 0.1f, 100000.0f);
+
+		// Create camera transformation
+		glm::mat4 view_King(1.0f);
+		view_King = camera.GetViewMatrix();
+
+		// Get the uniform locations for our matrices
+		GLint modelLoc_King = glGetUniformLocation(ourShaderKing.Program, "model");
+		GLint viewLoc_King = glGetUniformLocation(ourShaderKing.Program, "view");
+		GLint projLoc_King = glGetUniformLocation(ourShaderKing.Program, "projection");
+
+		// Pass locations to shaders
+		glUniformMatrix4fv(viewLoc_King, 1, GL_FALSE, glm::value_ptr(view_King));
+		glUniformMatrix4fv(projLoc_King, 1, GL_FALSE, glm::value_ptr(projection_King));
+
+		// Draw container
+		glBindVertexArray(VOA_King);
+
+		for (GLuint i = 0; i < 2; i++)
+		{
+			if (i <= 0)
+			{
+				// Activate White Texture
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, KingtextureW);
+				glUniform1i(glGetUniformLocation(ourShaderKing.Program, "faceTexture"), 0);
+			}
+			else
+			{
+				// Activate Black Texture 
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, KingTextureB);
+				glUniform1i(glGetUniformLocation(ourShaderKing.Program, "faceTexture"), 0);
+			}
+
+			// Calculate the model matrix for each object and pass it to the shader before drawing
+			glm::mat4 model_King(1.0f);
+			model_King = glm::translate(model_King, KingPositions[i]); // Original code 
+			GLfloat angle = 0.0f; // Original code
+			model_King = glm::rotate(model_King, angle, glm::vec3(1.0f, 0.0f, 0.0f)); // Original code
+
+			glUniformMatrix4fv(modelLoc_King, 1, GL_FALSE, glm::value_ptr(model_King));
+
+			glDrawArrays(GL_TRIANGLES, 0, 7620); //number of lines times by 2
+
+		}
+
+		glBindVertexArray(0);
+#pragma endregion
 		glDeleteBuffers(1, &VBO);
 		glDeleteBuffers(1, &IBO);
 #pragma endregion
@@ -2409,7 +2409,7 @@ int main()
 			{
 				// Activate White Texture
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, SkullTextureW);
+				glBindTexture(GL_TEXTURE_2D, SkullTextureB);
 				glUniform1i(glGetUniformLocation(ourShaderSkull.Program, "faceTexture"), 0);
 			}
 			else
@@ -2423,8 +2423,8 @@ int main()
 			// Calculate the model matrix for each object and pass it to the shader before drawing
 			glm::mat4 model_Skull(1.0f);
 			model_Skull = glm::translate(model_Skull, SkullPositions[i]); // Original code 
-			GLfloat angle = 0.0f; // Original code
-			model_Skull = glm::rotate(model_Skull, angle, glm::vec3(1.0f, 0.0f, 0.0f)); // Original code
+			GLfloat angle = 21.0f; // Original code
+			model_Skull = glm::rotate(model_Skull, angle, glm::vec3(0.0f, 2.0f, 0.0f)); // Original code
 
 			glUniformMatrix4fv(modelLoc_Skull, 1, GL_FALSE, glm::value_ptr(model_Skull));
 
@@ -2479,6 +2479,7 @@ int main()
 				glm::mat4 model_Palm(1.0f);
 				model_Palm = glm::translate(model_Palm, PalmPositions[i]); // Original code 
 				GLfloat angle = 0.0f; // Original code
+				model_Palm = glm::scale(model_Palm, glm::vec3(2, 2, 2));
 				model_Palm = glm::rotate(model_Palm, angle, glm::vec3(1.0f, 0.0f, 0.0f)); // Original code
 			
 				glUniformMatrix4fv(modelLoc_Palm, 1, GL_FALSE, glm::value_ptr(model_Palm));
@@ -2490,62 +2491,62 @@ int main()
 		glBindVertexArray(0);
 #pragma endregion
 
-//#pragma region Chest tree
-//		// Activate Shader
-//		ourShaderChest.Use();
-//
-//		// Create Projection Matrix (moved into while loop in order to update zoom)
-//		glm::mat4 projection_Chest(1.0f);
-//		//Perspective view
-//		projection_Chest = glm::perspective(glm::radians(camera.GetZoom()), (float)WIDTH / (float)HEIGHT, 0.1f, 100000.0f);
-//
-//		// Create camera transformation
-//		glm::mat4 view_Chest(1.0f);
-//		view_Chest = camera.GetViewMatrix();
-//
-//		// Get the uniform locations for our matrices
-//		GLint modelLoc_Chest = glGetUniformLocation(ourShaderChest.Program, "model");
-//		GLint viewLoc_Chest = glGetUniformLocation(ourShaderChest.Program, "view");
-//		GLint projLoc_Chest = glGetUniformLocation(ourShaderChest.Program, "projection");
-//
-//		// Pass locations to shaders
-//		glUniformMatrix4fv(viewLoc_Chest, 1, GL_FALSE, glm::value_ptr(view_Chest));
-//		glUniformMatrix4fv(projLoc_Chest, 1, GL_FALSE, glm::value_ptr(projection_Chest));
-//
-//		// Draw container
-//		glBindVertexArray(VOA_Chest);
-//
-//		for (GLuint i = 0; i < 4; i++)
-//		{
-//			if (i <= 0)
-//			{
-//				// Activate White Texture
-//				glActiveTexture(GL_TEXTURE0);
-//				glBindTexture(GL_TEXTURE_2D, ChesttextureW);
-//				glUniform1i(glGetUniformLocation(ourShaderChest.Program, "faceTexture"), 0);
-//			}
-//			else
-//			{
-//				// Activate Black Texture 
-//				glActiveTexture(GL_TEXTURE0);
-//				glBindTexture(GL_TEXTURE_2D, ChesttextureW);
-//				glUniform1i(glGetUniformLocation(ourShaderChest.Program, "faceTexture"), 0);
-//			}
-//
-//			// Calculate the model matrix for each object and pass it to the shader before drawing
-//			glm::mat4 model_Chest(1.0f);
-//			model_Chest = glm::translate(model_Chest, ChestPositions[i]); // Original code 
-//			GLfloat angle = 0.0f; // Original code
-//			model_Chest = glm::rotate(model_Chest, angle, glm::vec3(1.0f, 0.0f, 0.0f)); // Original code
-//
-//			glUniformMatrix4fv(modelLoc_Chest, 1, GL_FALSE, glm::value_ptr(model_Chest));
-//
-//			glDrawArrays(GL_TRIANGLES, 0, 2376); //number of lines times 20916
-//
-//		}
-//
-//		glBindVertexArray(0);
-//#pragma endregion
+#pragma region Draw Chest tree
+		// Activate Shader
+		ourShaderChest.Use();
+
+		// Create Projection Matrix (moved into while loop in order to update zoom)
+		glm::mat4 projection_Chest(1.0f);
+		//Perspective view
+		projection_Chest = glm::perspective(glm::radians(camera.GetZoom()), (float)WIDTH / (float)HEIGHT, 0.1f, 100000.0f);
+
+		// Create camera transformation
+		glm::mat4 view_Chest(1.0f);
+		view_Chest = camera.GetViewMatrix();
+
+		// Get the uniform locations for our matrices
+		GLint modelLoc_Chest = glGetUniformLocation(ourShaderChest.Program, "model");
+		GLint viewLoc_Chest = glGetUniformLocation(ourShaderChest.Program, "view");
+		GLint projLoc_Chest = glGetUniformLocation(ourShaderChest.Program, "projection");
+
+		// Pass locations to shaders
+		glUniformMatrix4fv(viewLoc_Chest, 1, GL_FALSE, glm::value_ptr(view_Chest));
+		glUniformMatrix4fv(projLoc_Chest, 1, GL_FALSE, glm::value_ptr(projection_Chest));
+
+		// Draw container
+		glBindVertexArray(VOA_Chest);
+
+		for (GLuint i = 0; i < 4; i++)
+		{
+			if (i <= 0)
+			{
+				// Activate White Texture
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, ChestTextureB);
+				glUniform1i(glGetUniformLocation(ourShaderChest.Program, "faceTexture"), 0);
+			}
+			else
+			{
+				// Activate Black Texture 
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, ChestTextureW);
+				glUniform1i(glGetUniformLocation(ourShaderChest.Program, "faceTexture"), 0);
+			}
+
+			// Calculate the model matrix for each object and pass it to the shader before drawing
+			glm::mat4 model_Chest(1.0f);
+			model_Chest = glm::translate(model_Chest, ChestPositions[i]); // Original code 
+			GLfloat angle = 0.0f; // Original code
+			model_Chest = glm::rotate(model_Chest, angle, glm::vec3(1.0f, 0.0f, 0.0f)); // Original code
+
+			glUniformMatrix4fv(modelLoc_Chest, 1, GL_FALSE, glm::value_ptr(model_Chest));
+
+			glDrawArrays(GL_TRIANGLES, 0, 672); //number of lines times 20916
+
+		}
+
+		glBindVertexArray(0);
+#pragma endregion
 #pragma endregion
 		
 //Terrain Generation
@@ -2633,12 +2634,11 @@ int main()
 	glDeleteVertexArrays(1, &VOA_Rook);
 	//glDeleteVertexArrays(1, &VOA_Queen);
 	//glDeleteVertexArrays(1, &VOA_King);
-	//glDeleteVertexArrays(1, &VOA_Knight);
-	//glDeleteVertexArrays(1, &VOA_Skull);
+	glDeleteVertexArrays(1, &VOA_Knight);
+	glDeleteVertexArrays(1, &VOA_Skull);
 	//glDeleteVertexArrays(1, &VOA_Palm);
-	//glDeleteBuffers(1, &VBO)
-	//glDeleteBuffers(1, &IBO)
-	//glDeleteBuffers(1, &IBO)
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &IBO);
 
 	return EXIT_SUCCESS;
 }
