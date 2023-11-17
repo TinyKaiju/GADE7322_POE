@@ -1450,10 +1450,10 @@ int main()
 	Shader ourShaderSkull("coreCB.vs", "coreCB.frag");
 
 	// Vertex data for our pawn piece
-	GLfloat verticesSkull[83664]; //83664
+	GLfloat verticesSkull[20916]; //83664
 
 	// Read Vertex data from pawn.txt file //
-	ifstream myFile7("res/3D models/OBJ Files/king.txt");
+	ifstream myFile7("res/3D models/OBJ Files/Skull.txt");
 	i = 0;
 
 	if (myFile7.is_open())
@@ -1552,77 +1552,77 @@ int main()
 
 #pragma endregion
 
-#pragma region Palm Tree
-	//Build & Compile Shader Program for Pawn Pieces
-	Shader ourShaderPalm("coreCB.vs", "coreCB.frag");
-
-	// Vertex data for our pawn piece
-	GLfloat verticesPalm[83664]; //83664
-
-	// Read Vertex data from pawn.txt file //
-	ifstream myFile8("res/3D models/OBJ Files/king.txt");
-	i = 0;
-
-	if (myFile8.is_open())
-	{
-		string line;
-
-		while (!myFile8.eof())
-		{
-			getline(myFile8, line, ' ');
-			//cout << "Val 1: " << line << endl;
-			verticesPalm[i] = stof(line);
-			i++;
-			getline(myFile8, line, ' ');
-			//cout << "Val 2: " << line << endl;
-			verticesPalm[i] = stof(line);
-			i++;
-			getline(myFile8, line, '\n');
-			//cout << "Val 3: " << line << endl;
-			verticesPalm[i] = stof(line);
-			i++;
-		}
-		myFile8.close();
-	}
-	else
-	{
-		cout << "Can't open the file";
-	}
-	// Read Vertex data from pawn.txt file //
-
-	// Positions of pawns
-	glm::vec3 palmPositions[] =
-	{
-		// Row 1
-		glm::vec3(1.0f, 0.5f, 4.0f),
-
-		// Row 2
-		glm::vec3(1.0f, 0.5f, -3.0f),
-	};
-
-	// Generate the vertex arrays and vertex buffers and save them into variables
-	GLuint VBA_Palm, VOA_Palm;
-	glGenVertexArrays(1, &VOA_Palm);
-	glGenBuffers(1, &VBA_Palm);
-
-	// Bind the vertex array object
-	glBindVertexArray(VOA_Palm);
-
-	// Bind and set the vertex buffers
-	glBindBuffer(GL_ARRAY_BUFFER, VBA_Palm);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesPalm), verticesPalm, GL_STATIC_DRAW);
-
-	// Create the vertex pointer and enable the vertex array
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (GLvoid*)0); //Position
-	glEnableVertexAttribArray(0);
-
-	// Texture coordinate attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0); //Texture
-	glEnableVertexAttribArray(2);
-
-	// Unbind the vertex array to prevent strange bugs
-	glBindVertexArray(0);
-#pragma endregion 
+//#pragma region Palm Tree
+//	//Build & Compile Shader Program for Pawn Pieces
+//	Shader ourShaderPalm("coreCB.vs", "coreCB.frag");
+//
+//	// Vertex data for our pawn piece
+//	GLfloat verticesPalm[20916]; //20916
+//
+//	// Read Vertex data from pawn.txt file //
+//	ifstream myFile8("res/3D models/OBJ Files/king.txt");
+//	i = 0;
+//
+//	if (myFile8.is_open())
+//	{
+//		string line;
+//
+//		while (!myFile8.eof())
+//		{
+//			getline(myFile8, line, ' ');
+//			//cout << "Val 1: " << line << endl;
+//			verticesPalm[i] = stof(line);
+//			i++;
+//			getline(myFile8, line, ' ');
+//			//cout << "Val 2: " << line << endl;
+//			verticesPalm[i] = stof(line);
+//			i++;
+//			getline(myFile8, line, '\n');
+//			//cout << "Val 3: " << line << endl;
+//			verticesPalm[i] = stof(line);
+//			i++;
+//		}
+//		myFile8.close();
+//	}
+//	else
+//	{
+//		cout << "Can't open the file";
+//	}
+//	// Read Vertex data from pawn.txt file //
+//
+//	// Positions of pawns
+//	glm::vec3 palmPositions[] =
+//	{
+//		// Row 1
+//		glm::vec3(1.0f, 0.5f, 4.0f),
+//
+//		// Row 2
+//		glm::vec3(1.0f, 0.5f, -3.0f),
+//	};
+//
+//	// Generate the vertex arrays and vertex buffers and save them into variables
+//	GLuint VBA_Palm, VOA_Palm;
+//	glGenVertexArrays(1, &VOA_Palm);
+//	glGenBuffers(1, &VBA_Palm);
+//
+//	// Bind the vertex array object
+//	glBindVertexArray(VOA_Palm);
+//
+//	// Bind and set the vertex buffers
+//	glBindBuffer(GL_ARRAY_BUFFER, VBA_Palm);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesPalm), verticesPalm, GL_STATIC_DRAW);
+//
+//	// Create the vertex pointer and enable the vertex array
+//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (GLvoid*)0); //Position
+//	glEnableVertexAttribArray(0);
+//
+//	// Texture coordinate attribute
+//	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0); //Texture
+//	glEnableVertexAttribArray(2);
+//
+//	// Unbind the vertex array to prevent strange bugs
+//	glBindVertexArray(0);
+//#pragma endregion 
 #pragma endregion
 
 	//Game LOOP
@@ -2161,7 +2161,7 @@ int main()
 
 			glUniformMatrix4fv(modelLoc_Skull, 1, GL_FALSE, glm::value_ptr(model_Skull));
 
-			glDrawArrays(GL_TRIANGLES, 0, 27888); //number of lines times 27888
+			glDrawArrays(GL_TRIANGLES, 0, 6972); //number of lines times 27888
 
 		}
 #pragma endregion
