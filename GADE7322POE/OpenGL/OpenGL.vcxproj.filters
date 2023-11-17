@@ -98,7 +98,13 @@
     <Text Include="res\3D models\OBJ Files\rook.txt">
       <Filter>ChessPieces</Filter>
     </Text>
+    <Text Include="res\3D models\OBJ Files\PalmTree.txt">
+      <Filter>Custom Meshes</Filter>
+    </Text>
     <Text Include="res\3D models\OBJ Files\Skull.txt">
+      <Filter>Custom Meshes</Filter>
+    </Text>
+    <Text Include="res\3D models\OBJ Files\Chest.txt">
       <Filter>Custom Meshes</Filter>
     </Text>
   </ItemGroup>

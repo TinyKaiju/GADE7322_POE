@@ -157,8 +157,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\3D models\OBJ Files\bishop.txt" />
+    <Text Include="res\3D models\OBJ Files\Chest.txt" />
     <Text Include="res\3D models\OBJ Files\king.txt" />
     <Text Include="res\3D models\OBJ Files\knight.txt" />
+    <Text Include="res\3D models\OBJ Files\PalmTree.txt" />
     <Text Include="res\3D models\OBJ Files\pawn.txt" />
     <Text Include="res\3D models\OBJ Files\queen.txt" />
     <Text Include="res\3D models\OBJ Files\rook.txt" />
