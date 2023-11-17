@@ -2,10 +2,10 @@
 
 out vec4 color;
 
-uniform vec3 objectcolor;
-uniform vec3 lightcolor;
+uniform vec3 objectColor;
+uniform vec3 lightColor;
 
 void main()
 {
-    color = texture(objectcolor * lightcolor, 1.0f);
+    color = texture(objectColor * lightColor, 1.0f);
 };
