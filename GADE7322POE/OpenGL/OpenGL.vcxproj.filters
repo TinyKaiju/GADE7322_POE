@@ -52,6 +52,24 @@
     <None Include="CoreCB.vs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="SkyBox.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="SkyBox.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Lighting.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Lighting.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Lamp.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Lamp.vs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GADEChessboard.rc">

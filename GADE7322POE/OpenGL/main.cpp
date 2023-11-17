@@ -31,6 +31,8 @@ int SCREEN_WIDTH, SCREEN_HEIGHT; // Replace all screenW & screenH with these
 // Function declaration
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void MouseCallback(GLFWwindow* window, double xPos, double yPos); // Get mouse pos in order to hide it
+void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
+void ProcessInput(GLFWwindow* window);
 
 // Initialise camera values
 Camera camera(glm::vec3(0.0f, 2.0f, 12.0f));
@@ -47,6 +49,7 @@ bool animate = false;
 
 GLfloat AnimateCPRotation();
 glm::vec3 AnimatePosition(glm::vec3 pos);
+glm::vec3 LightPos(1.0f, 1.2f, 3.0f);
 
 int main()
 {
@@ -80,7 +83,8 @@ int main()
 	// Set the required callback functions
 	glfwSetKeyCallback(window, KeyCallback);
 	glfwSetCursorPosCallback(window, MouseCallback);
-
+	glfwSetScrollCallback(window, ScrollCallback);
+	GLuint CreateSkyboxTexture(GLuint texture, vector<std::string> faces, int width, int height);
 
 	// Center  and Hide cursor
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -215,6 +219,98 @@ int main()
 
 #pragma endregion
 
+
+#pragma region SkyBox Shader
+
+	Shader skyboxShader("Skybox.vs", "SkyBox.frag");
+	
+	float skyboxVertices[] = {
+		// positions
+		-1.0f,  1.0f, -1.0f,
+		-1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		-1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f
+	};
+	// Generate the vertex arrays and vertex buffers and save them into variables
+	unsigned int skyboxVAO, skyboxVBO;
+	glGenVertexArrays(1, &skyboxVAO);
+	glGenBuffers(1, &skyboxVBO);
+
+	// Bind the vertex array object
+	glBindVertexArray(skyboxVAO);
+
+	// Bind and set the vertex buffers
+	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+
+	// Create the vertex pointer and enable the vertex array
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// Load textures
+	vector<std::string> skyboxFaces
+	{
+		"res/images/Skyboxs/Pink/px.png",
+		"res/images/Skyboxs/Pink/nx.png",
+		"res/images/Skyboxs/Pink/py.png",
+		"res/images/Skyboxs/Pink/ny.png",
+		"res/images/Skyboxs/Pink/pz.png",
+		"res/images/Skyboxs/Pink/nz.png"
+	};
+
+
+	// Skybox texture variable
+	GLuint skyboxTexture = 0;
+
+	int widthTexture = 1024;
+	int heightTexture = 1024;
+
+	skyboxTexture = CreateSkyboxTexture(skyboxTexture, skyboxFaces, widthTexture, heightTexture);
+
+#pragma endregion 
+
+#pragma Light shader
+	Shader LightingShader("Lighting.vs", "Lighting.frag");
+	Shader LampShader("Lamp.vs", "Lamp.frag");
+#pragma endregion
+
+
 #pragma region BUILD AND COMPILE SHADER - CHESSBOARD
 
 	Shader chessboardShader("CoreCB.vs", "CoreCB.frag");
@@ -311,6 +407,7 @@ int main()
 		-0.25f,  0.5f,  0.25f,    0.0f, 0.0f,
 		-0.25f,  0.5f, -0.25f,    0.0f, 1.0f // Top
 	};
+
 	// Positions of different cubes
 	glm::vec3 cubePositions[] =
 	{
@@ -367,12 +464,31 @@ int main()
 	// Unbind the vertex array to prevent strange bugs
 	glBindVertexArray(0);
 
+	// Generate the vertex arrays and vertex buffers and save them into variables
+	GLuint VOA_LightBoard;
+	glGenVertexArrays(1, &VOA_LightBoard);
+	glGenBuffers(1, &VBA_Board);
+
+	// Bind the vertex array object
+	glBindVertexArray(VOA_LightBoard);
+
+	// Bind and set the vertex buffers
+	glBindBuffer(GL_ARRAY_BUFFER, VBA_Board);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesBoard), verticesBoard, GL_STATIC_DRAW);
+
+	// Create the vertex pointer and enable the vertex array
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0); //Position
+	glEnableVertexAttribArray(0);
+
+	// Unbind the vertex array to prevent strange bugs
+	glBindVertexArray(0);
+
 #pragma region Chessboard Texture
 
 	// Chessboard texture variables
 	GLuint textureWhite, textureBlack, textureGrey;
 	int widthB, heightB;
-#pragma endregion
+
 
 #pragma region White Texture
 
@@ -426,6 +542,7 @@ int main()
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 #pragma endregion
+
 #pragma region Border Texture
 
 	//Create Black texture
@@ -455,7 +572,10 @@ int main()
 
 #pragma endregion
 
+#pragma endregion
+
 #pragma region Build and Compile Shader - Chess Pieces
+
 
 #pragma region Pawn
 	int i = 0;
@@ -1034,6 +1154,13 @@ int main()
 #pragma endregion
 
 
+
+
+
+
+
+#pragma endregion
+
 #pragma region Queen
 
 	//Build & Compile Shader Program for Pawn Pieces
@@ -1316,12 +1443,6 @@ int main()
 
 #pragma endregion
 
-
-
-
-
-#pragma endregion
-
 #pragma endregion
 
 	//Game LOOP
@@ -1340,7 +1461,6 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 #pragma region Draw chessBoard
-
 		// Activate Shader
 		chessboardShader.Use();
 
@@ -1522,11 +1642,20 @@ int main()
 
 		}
 #pragma endregion
-		
+
 #pragma region Draw Rook
 
 		// Activate Shader
 		ourShaderRook.Use();
+
+
+
+		/*GLint objectColorLoc = glGetUniformLocation(LightingShader.Program, "objectColor");
+		GLint lightLoc = glGetUniformLocation(LightingShader.Program, "lightColor");
+
+		glUniform3f(objectColorLoc, 1.0f, 0.5f, 0.31f);
+		glUniform3f(lightLoc, 1.0f, 0.5f, 1.0f);
+		LightPos = glm::vec3(1.0f, 1.3f, 3.0f);*/
 
 		// Create Projection Matrix (moved into while loop in order to update zoom)
 		glm::mat4 projection_Rook(1.0f);
@@ -1544,6 +1673,7 @@ int main()
 		// Pass locations to shaders
 		glUniformMatrix4fv(viewLoc_Rook, 1, GL_FALSE, glm::value_ptr(view_Rook));
 		glUniformMatrix4fv(projLoc_Rook, 1, GL_FALSE, glm::value_ptr(projection_Rook));
+		//glUniform3f(glGetUniformLocation(LightingShader.Program, "lightPos"), LightPos.x, LightPos.y, LightPos.z);
 
 		// Draw container
 		glBindVertexArray(VOA_Rook);
@@ -1808,7 +1938,9 @@ int main()
 #pragma endregion
 		
 #pragma endregion
-		//Terrain Generation
+		
+		
+//Terrain Generation
 #pragma region Height Map
 
 		// Activate Shader
@@ -1850,8 +1982,37 @@ int main()
 
 #pragma endregion
 
+#pragma region SkyBox Creation
+		// draw skybox as last
+				// change depth function so depth test passes when values are equal to depth buffer's content
+		glDepthFunc(GL_LEQUAL);
 
-		// DRAW OPENGL WINDOW/VIEWPORT
+		skyboxShader.Use();
+		// Create Projection Matrix
+		glm::mat4 projection_Skybox = glm::perspective(glm::radians(camera.GetZoom()), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
+
+		// Create camera transformation
+		// remove translation from the view matrix
+		glm::mat4 view_Skybox = glm::mat4(glm::mat3(camera.GetViewMatrix()));
+
+		// Get the uniform locations for our matrices
+		GLint viewLoc_Skybox = glGetUniformLocation(skyboxShader.Program, "view");
+		GLint projLoc_Skybox = glGetUniformLocation(skyboxShader.Program, "projection");
+
+		// Pass locations to shaders
+		glUniformMatrix4fv(viewLoc_Skybox, 1, GL_FALSE, glm::value_ptr(view_Skybox));
+		glUniformMatrix4fv(projLoc_Skybox, 1, GL_FALSE, glm::value_ptr(projection_Skybox));
+		// skybox cube
+		glBindVertexArray(skyboxVAO);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+		glDepthFunc(GL_LESS); // set depth function back to default
+#pragma endregion
+		
+		
+		//DRAW OPENGL WINDOW/VIEWPORT
 		glfwSwapBuffers(window);
 
 	}
@@ -1943,7 +2104,43 @@ void MouseCallback(GLFWwindow* window, double xPos, double yPos)
 
 		lastX = xPos;
 		lastY = yPos;
+		
+		camera.ProcessMouseMovement(xOffset, yOffset);
 	}
+
+}
+
+// GLFW: whenever the mouse scroll wheel scrolls, this callback is called
+void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
+{
+	camera.ProcessMouseScroll(yOffset);
+}
+
+// Moves/alters the camera positions based on user input
+// WASD and Arrow keys
+void ProcessInput(GLFWwindow* window)
+{
+	// Camera controls
+	if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP])
+	{
+		camera.ProcessKeyboard(FORWARD, deltaTime);
+	}
+
+	if (keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN])
+	{
+		camera.ProcessKeyboard(BACKWARD, deltaTime);
+	}
+
+	if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT])
+	{
+		camera.ProcessKeyboard(LEFT, deltaTime);
+	}
+
+	if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT])
+	{
+		camera.ProcessKeyboard(RIGHT, deltaTime);
+	}
+	
 }
 
 GLfloat AnimateCPRotation()
@@ -1977,6 +2174,7 @@ GLfloat AnimateCPSlide()
 	}
 
 }
+
 glm::vec3 AnimatePosition(glm::vec3 pos)
 {
 	if (animate)
@@ -2020,4 +2218,36 @@ glm::vec3 AnimatePosition3(glm::vec3 pos)
 		// Just set position to 0 is original rotation
 		return pos;
 	}
+}
+
+GLuint CreateSkyboxTexture(GLuint texture, vector<std::string> faces, int width, int height) // Method for Skybox Texture
+{
+	int widthTexture = 0, heightTexture = 0;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+
+	int nrChannels;
+	for (unsigned int i = 0; i < faces.size(); i++)
+	{
+		unsigned char* textureImg = SOIL_load_image(faces[i].c_str(), &width, &height, &nrChannels, 0);
+		if (textureImg)
+		{
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureImg);
+			SOIL_free_image_data(textureImg);
+		}
+		else
+		{
+			std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
+			SOIL_free_image_data(textureImg);
+		}
+	}
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	return texture;
 }
