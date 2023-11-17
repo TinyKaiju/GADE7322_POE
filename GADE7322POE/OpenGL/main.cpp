@@ -734,7 +734,6 @@ int main()
 
 #pragma endregion
 
-	glDeleteBuffers(1, &VBO);
 
 #pragma region Rook
 	//Build & Compile Shader Program for Pawn Pieces
@@ -873,7 +872,6 @@ int main()
 #pragma endregion
 
 #pragma endregion
-	glDeleteBuffers(1, &VBO);
 
 #pragma region Bishop
 
@@ -1018,7 +1016,6 @@ int main()
 
 
 #pragma endregion
-	glDeleteBuffers(1, &VBO);
 
 #pragma region Knight
 
@@ -1163,7 +1160,6 @@ int main()
 
 
 #pragma endregion
-	glDeleteBuffers(1, &VBO);
 
 //#pragma region Queen
 //
@@ -1306,7 +1302,6 @@ int main()
 //
 //
 //#pragma endregion
-	glDeleteBuffers(1, &VBO);
 
 #pragma region King
 	//Build & Compile Shader Program for Pawn Pieces
@@ -1447,7 +1442,6 @@ int main()
 
 
 #pragma endregion
-	glDeleteBuffers(1, &VBO);
 
 #pragma endregion
 
@@ -2076,8 +2070,7 @@ int main()
 		}
 		glBindVertexArray(0);
 #pragma endregion
-		glDeleteBuffers(1, &VBO);
-		glDeleteBuffers(1, &IBO);
+
 #pragma region Draw Rook
 		i = 0;
 		// Activate Shader
@@ -2134,8 +2127,7 @@ int main()
 		}
 		glBindVertexArray(0);
 #pragma endregion
-		glDeleteBuffers(1, &VBO);
-		glDeleteVertexArrays(1, &IBO);
+
 #pragma region Draw Bishop
 
 		// Activate Shader
@@ -2193,8 +2185,7 @@ int main()
 		glBindVertexArray(0);
 
 #pragma endregion
-		glDeleteBuffers(1, &VBO);
-		glDeleteVertexArrays(1, &IBO);
+
 #pragma region Draw Knight
 		
 		// Activate Shader
@@ -2255,8 +2246,7 @@ int main()
 		}
 		glBindVertexArray(0);
 #pragma endregion
-		glDeleteBuffers(1, &VBO);
-		glDeleteBuffers(1, &IBO);
+
 //#pragma region Draw Queen
 //
 //		// Activate Shader
@@ -2312,8 +2302,7 @@ int main()
 //
 //		}
 //#pragma endregion
-		glDeleteBuffers(1, &VBO);
-		glDeleteBuffers(1, &IBO);
+
 #pragma region Draw King
 
 		// Activate Shader
@@ -2371,8 +2360,7 @@ int main()
 
 		glBindVertexArray(0);
 #pragma endregion
-		glDeleteBuffers(1, &VBO);
-		glDeleteBuffers(1, &IBO);
+
 #pragma endregion
 		
 #pragma region Draw Custom Models
